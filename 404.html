@@ -1,127 +1,181 @@
 <!DOCTYPE html>
-<html lang="Chinese">
+<html lang="zh-CN">
+
+<!-- Head tag -->
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!--Description-->
   
-  <meta name="keywords" content="网站关键字">
-  <meta name="description" content="网站简介">
+  <meta name="description" content="Object - C &amp; Swift">
+  
+
+  <!--Author-->
+  
+  <meta name="author" content="Maguns">
+  
+
+  <!--Open Graph Title-->
+  
+      <meta property="og:title" content="Maguns‘s Blog"/>
+  
+  <!--Open Graph Description-->
+  
+      <meta property="og:description" content="Object - C &amp; Swift" />
+  
+  <!--Open Graph Site Name-->
+  <meta property="og:site_name" content="Maguns‘s Blog"/>
+  <!--Type page-->
+  
+      <meta property="og:type" content="website" />
+  
+  <!--Page Cover-->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- 百度统计 -->
+    <script>
+	var _hmt = _hmt || [];
+	(function() {
+  	var hm = document.createElement("script");
+  	hm.src = "https://hm.baidu.com/hm.js?c0451e16533956173997b85f7a8de666";
+  	var s = document.getElementsByTagName("script")[0]; 
+  	s.parentNode.insertBefore(hm, s);
+	})();
+    </script>
+  <!-- Title -->
   
   <title>Maguns‘s Blog</title>
-  
-    <!-- stylesheets list from config.yml -->
-    
-      <link rel="stylesheet" href="/css/materialize.min.css">
-    
-      <link rel="stylesheet" href="/css/nprogress.min.css">
-    
-      <link rel="stylesheet" href="/css/Vateral.min.css">
-    
-  
-  
+
+
+  <link rel="shortcut icon" href="/favicon.ico">
+    <!--font-awesome-->
+  <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- Custom CSS/Sass -->
+  <link rel="stylesheet" href="/css/style.css">
+
 </head>
+
+
 <body>
-<a href="#" data-activates="slide-out"  class="button-collapse"><div class="nav-btn"><i class="material-icons">list</i></div></a>
-<div id="menu-outer">
-  <div id="menu-inner">
-      <ul id="slide-out" class="side-nav" >
-    <div class="nav-header"  style="background-image: url(/images/header-bg.png)">
-    <div class="header-box"><img src="/images/header.png" ondragstart="return false;"></div>
-    <p>Maguns</p>
-    <div class="nav-link">
-        
-        <a href="http://example.com" target="_blank"> <div class="link-box twitter"></div></a>
-        
-        
-        <a  href="http://example.com" target="_blank"><div class="link-box github"></div></a>
-        
-        
-        <a href="mailto:http://example.com"><div class="link-box email"></div></a>
-        
-        
-        <a href="http://example.com" target="_blank"><div class="link-box weibo"></div></a>
-        
-        
-        <a href="http://example.com" target="_blank"> <div class="link-box zhihu"></div></a>
-        
-    </div>
-    <div class="nav-search">
-        <form id="search-form"> <!-- 搜索框相关 -->
-            <input type="text" id="local-search-input" name="q" results="0" placeholder="搜索..." class="search form-control" autocomplete="off" autocorrect="off"/>
-            <div class="nav-search-img"><i class="material-icons">search</i></div>
-        </form>
-        <div id="local-search-result"></div> <!-- 搜索结果区 -->
-        <p class='no-result'>无搜索结果</p>
-    </div>
-</div>
-    <!--Homepage-->
 
-<li class="nav-list">
-    <a href="/" target="_self">
-        <div class="nav-ico"><i class="material-icons">home</i> </div><p>主页</p>
-    </a>
-</li>
-
-<!--archives-->
-
-<li class="nav-list dropdown-btn">
-    <a  class=""  target="_self">
-        <div class="nav-ico"><i class="material-icons">assignment</i></div><p>归档</p><div class="dropdown-ico"><i class="material-icons">arrow_drop_down</i></div>
-    </a>
-</li>
-
-<ul class="dropdown-menu dropdown" >
-    <li class="nav-dropdown-list">
-        <a class="archive-link" href="/archives/2017/06/">June 2017<span class="archive-count">1</span></a>
-    </li>
-</ul>
-<!--categories-->
-
-<li class="nav-list dropdown-btn">
-    <a   class=""  target="_self">
-        <div class="nav-ico"><i class="material-icons">dashboard</i></div><p>分类</p><div class="dropdown-ico"><i class="material-icons">arrow_drop_down</i></div>
-    </a>
-</li>
-
-<ul class="dropdown-menu dropdown" >
-    <li class="nav-dropdown-list">
-        <a class="category-link" href="/categories/无聊/">无聊<span class="category-count">1</span></a>
-    </li>
-</ul>
-<!--tags-->
-
-<li class="nav-list">
-    <a href="/archives" target="_self">
-        <div class="nav-ico"><i class="material-icons">bookmark</i> </div><p>标签</p>
-    </a>
-</li>
-
-<!--photo-->
-
-<!--friends-->
-
-<!--about-->
-
-
-</ul>
-
-  </div>
-</div>
-
-<div id="content-outer">
-  <div id="content-inner">
-    <article id="post">
-  <div class="post-page-title"  style="background-image:url(/images/random/vateral-10.png)" >
-  <h2></h2>
+  <!-- Nav -->
+  <header class="site-header">
+  <div class="header-inside">
     
-  <p>作者:Maguns &nbsp&nbsp 发布于:<time datetime="2017-05-21T12:53:07.000Z">
+    <div class="logo">
+      <a href="/" rel="home">
+        
+        <img src="http://oct3pmpde.bkt.clouddn.com/timg.jpg" alt="Maguns‘s Blog" height="60">
+        
+      </a>
+    </div>
+    <a class="header-name" href="/">
+            <span>Maguns‘s Blog</span>
+            的部落宅
+        </a>
+    <!-- navbar -->
+    <nav class="navbar">
+      <!--  nav links -->
+      <div class="collapse">
+        <ul class="navbar-nav">
+          
+          
+            <li>
+              <a href="/.">
+                
+                  <i class="fa fa-home "></i>
+                
+                首页
+              </a>
+            </li>
+          
+            <li>
+              <a href="/archives">
+                
+                  <i class="fa fa-archive "></i>
+                
+                归档
+              </a>
+            </li>
+          
+            <li>
+              <a href="/about">
+                
+                  <i class="fa fa-user "></i>
+                
+                关于
+              </a>
+            </li>
+          
+            <li>
+              <a href="/project">
+                
+                  <i class="fa fa-folder-open "></i>
+                
+                项目
+              </a>
+            </li>
+          
+            <li>
+              <a href="/photo">
+                
+                  <i class="fa fa-photo "></i>
+                
+                相册
+              </a>
+            </li>
+          
+            <li>
+              <a href="/guestbook">
+                
+                  <i class="fa fa-edit "></i>
+                
+                留言
+              </a>
+            </li>
+          
+            <li>
+              <a href="/atom.xml">
+                
+                  <i class="fa fa-send "></i>
+                
+                RSS
+              </a>
+            </li>
+          
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </nav>
+    <div class="button-wrap">
+      <button class="menu-toggle">Primary Menu</button>
+    </div>
+  </div>
+</header>
+
+
+  <!-- Main Content -->
+  <div class="content-area">
+  <div class="post">
+    <!-- Post Content -->
+    <div class="container">
+      <article>
+        <!-- Title date & tags -->
+        <div class="post-header">
+          <h1 class="entry-title">
+            Untitled
+            
+          </h1>
+         
+        </div>
+         <p class="a-posted-on">
           2017-05-21
-    </time>
-  </p>
-    
-  </div>
-  <div class="post-page-content">
-  CTYPE HTML>
+          </p>
+        <!-- Post Main Content -->
+        <div class="entry-content">
+          CTYPE HTML>
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html;charset=utf-8;">
@@ -139,108 +193,38 @@
 </html>
 
 
-  </div>
-  <!--评论块-->
+        </div>
+      </article>
+    </div>
+    <!-- Pre or Next -->
     
-
-</article>
-<nav class="post-nav">
-  <!-- Prev Nav -->
-    
-
-
-  <!-- Next Nav -->
-    
-</nav>
-<div class="post-toc-btn"><i class="material-icons">format_list_numbered</i></div>
-<div class="post-toc-none"><p>(无)</p></div>
-<div class="post-toc-box">
-    
-</div>
-<div class="post-back"><i class="material-icons">arrow_back</i></div>
-
-  </div>
-</div>
-<div id="bottom-outer">
-  <div id="bottom-inner">
-    <a  id="top-button" onfocus="this.blur();"><div class="up upinbody"><i class="material-icons material-up">vertical_align_top</i></div></a>
-
-
-<p style="line-height: 45px">Copyright ©  2017  Maguns‘s Blog</p>
-<p style="line-height: 45px">Powered by <a href="https://hexo.io/" target="_blank"> Hexo </a> && Theme - <a href="https://github.com/moumao/hexo-theme-Vateral" target="_blank">Vateral</a></p>
-
+　　　　
   </div>
 </div>
 
-<!--影集界面需要的资源-->
+
+  <!-- Footer -->
+  <!-- Footer -->
+<footer class="site-info">
+  <p>
+    <span>Maguns‘s Blog &copy; 2017</span>
+    
+      <span class="split">|</span>
+      <span>th是个小屁孩的技术小屋</span>
+    
+  </p>
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</footer>
 
 
+  <!-- After footer scripts -->
+  <!-- scripts -->
+<script src="/js/app.js"></script>
 
-<!-- scripts list from theme config.yml -->
-
-<script src="/js/jquery-3.1.1.min.js"></script>
-
-<script src="/js/materialize.min.js"></script>
-
-<script src="/js/jquery.pjax.min.js"></script>
-
-<script src="/js/nprogress.min.js"></script>
-
-<script src="/js/main.min.js"></script>
-
-
-
-<script>
-    $(document).pjax('a:not(.nopjax)', '#content-inner', {fragment:'#content-inner', timeout:8000})
-    $(document).on('pjax:start', NProgress.start).on('pjax:end', NProgress.done)
-     .on('pjax:end', function() {
-         dowmdiv();
-         $(".lazy").lazyload({
-             effect : "fadeIn"
-         });
-         $(".post-back").click(function () {
-             window.history.back();
-         });
-         var $root = $('html, body');
-         $('.post-toc-link').click(function() {
-             $root.animate({
-                 scrollTop: $( $.attr(this, 'href') ).offset().top
-             }, 500);
-             return false;
-         });
-         $(".post-toc-btn").click(function () {
-             if($(".post-toc").exist()){
-                 $(".post-toc-box").fadeToggle()
-             }else {
-                 $(".post-toc-none").fadeToggle()
-             }
-         })
-         var links=$(".post-author-link");
-         var button=$(".post-author-button");
-         button.click(function (){
-             if(links.css("display")=== "none"){
-                 links.css({
-                     "display":"block"
-                 }).animate({
-                     "right":"60px",
-                     "opacity":1
-                 },500)
-             }else {
-                 links.animate({
-                     "opacity":0
-                 },500)
-                 setTimeout(function (){
-
-                     links.css({
-                         "display":"none",
-                         "right":"100px"
-                     })
-                 },500)
-             }
-         })
-     })
-</script>
 
 
 </body>
+
 </html>
