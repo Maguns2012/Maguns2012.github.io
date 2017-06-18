@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="Chinese">
+<html class="theme-next pisces use-motion" lang="Chinese">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -109,7 +109,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Pisces',
     sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
     fancybox: true,
     motion: true,
@@ -203,7 +203,17 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
           </a>
         </li>
       
@@ -213,7 +223,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -224,6 +234,16 @@
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            Commonweal 404
           </a>
         </li>
       
@@ -261,7 +281,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Maguns">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="http://oqaxykewn.bkt.clouddn.com/blog_header.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -285,7 +305,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-18T00:57:47+08:00">
                 2017-06-18
@@ -306,7 +326,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">in</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -346,59 +366,20 @@
       
         
           
-            <p><a href="https://www.andrewcbancroft.com/2017/06/05/why-is-it-called-a-closure-anyway-a-swift-conceptual-look/?utm_campaign=Revue%20newsletter&amp;utm_medium=Newsletter&amp;utm_source=revue" target="_blank" rel="external">原文链接</a>国外友人的博客</p>
-<h6 id="单纯的我以为有底层代码可看了，结果。。。"><a href="#单纯的我以为有底层代码可看了，结果。。。" class="headerlink" title="单纯的我以为有底层代码可看了，结果。。。"></a>单纯的我以为有底层代码可看了，结果。。。</h6><p><strong>以下部分使用“闭包”代替原文中的”Closure”</strong></p>
-<ul>
-<li><h4 id="名字里包含了什么？"><a href="#名字里包含了什么？" class="headerlink" title="名字里包含了什么？"></a>名字里包含了什么？</h4></li>
-</ul>
-<p>如果一门语言可以实现命名，你就可以通过实现中找到命名原因。他们在命名的时候肯定是有目的的。所以当你思考“为什么这么命名”的问题时，你可能就会理解语法的特点和概念。</p>
-<ul>
-<li><h4 id="为什么是闭包"><a href="#为什么是闭包" class="headerlink" title="为什么是闭包"></a>为什么是闭包</h4></li>
-</ul>
-<p>现在交换：真是提问“为什么”这个问题</p>
-<p>Swift 底层是开源的，经常有一些描述在包含在命名里。但是闭包在Swift开源之前就已经存在了。这可导致，我真的找不到太多的论点说明闭包问什么叫“闭包”。</p>
-<ul>
-<li><h4 id="分拆开闭包（感谢，thesaurus-com！）"><a href="#分拆开闭包（感谢，thesaurus-com！）" class="headerlink" title="分拆开闭包（感谢，thesaurus.com！）"></a>分拆开闭包（感谢，thesaurus.com！）</h4></li>
-</ul>
-<p>所以…我们将开始通过讨论以表达什么是闭包。</p>
-<p>官方文档中闭包的描述“<em>Closures</em> are self-contained blocks of functionality that can be passed around and used in your code.”（<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Closures.html" target="_blank" rel="external">Apple Developer Docs</a>）。需要深究的是——为什么叫他们”functions”??</p>
-<p>尽我所能的拆开这个词，当我在<a href="thesaurus.com">同义词网站</a>查询闭包的近义词时，我获取到这些</p>
-<ul>
-<li>Plug</li>
-</ul>
-<ul>
-<li><p>Seal</p>
-</li>
-<li><p>Cork</p>
-<p>在这些闭包的近义词词都是好像都是围绕着…某些东西。</p>
-<p>好吧，那么闭包围绕着什么？好问题！</p>
-<p>剪短的回答，变量   <strong>Variables</strong></p>
-<p>当在互联网上仔细阅读什么是闭包的时候，不可避免的或出现通过Apple’s 模拟器，等相关引用。长时间查阅后，我找到了一些关键字指向了“捕获变量”和“锁定变量”。</p>
-<p>这些短语就像是一滩浑水（对我来说），不是能完全清楚“捕获变量”或“锁定变量“的意思，知道我看到了”Plug“、”Seal“和”Cork“。</p>
-<p>一瞬间<strong>茅塞顿开</strong>。</p>
-</li>
-<li><h4 id="你可以想象一个场景"><a href="#你可以想象一个场景" class="headerlink" title="你可以想象一个场景"></a>你可以想象一个场景</h4><p>需要你想想一个场景，把方法想象成一个空的泳池。就是一个Swwingpool.Empty</p>
-<p>程序开始运行，之后同一时刻你的程序有很多方法执行了回调。当开始执行程序后，水涌入填充池子。一打硬币进入了水里。</p>
-<p>硬币代表了变量，由方法也就是池子创建并使用。</p>
-<p>方法执行了所有的return返回了关键字，并把所有的返回值排除了池子。毫秒级内，池子的水被吸出了。</p>
-<p><strong>当所有的硬币都在池子里会发生什么</strong></p>
-<p>当然，所有的变脸都会被冲走，所有的一切都像是没发生过，当方法执行了return，你的池子就被清空了。</p>
-<p>当方法执行return，所有由方法创建的变量被清除除了内存。</p>
-</li>
-<li><h4 id="除非…"><a href="#除非…" class="headerlink" title="除非…"></a>除非…</h4><p>如果，池子里任然有水，你任然可以潜进去，扔下或者剑气一下硬币。如果你可以把他放在一个容器里，用软木塞或者其他容器密封。</p>
-<p>如果你做了这个，这些硬币依然可以被使用，即时池子被排除了水（当方法执行了return）。</p>
-<p>如果需要的话一个闭包可以被作为一种在池子里铲出硬币（变量或者容器）的机制，并密封它自己，知道超方法清空它和硬币。</p>
-</li>
-<li><h4 id="闭包实践"><a href="#闭包实践" class="headerlink" title="闭包实践"></a>闭包实践</h4><p>当你从官方文档得知 “self-contained blocks of functionality that can be passed around and used in your code.”，也许你会意识到这点，他们从环境中获取变量，打包并密封变量，来达到保护变量的目的。</p>
-<p>事实证明，你创建的所有闭包都有这样的能力。</p>
-<p>并不是所有的返回并锁定变量，但是Swift的所有闭包都有这样的功能。</p>
-<p>这可能就是闭包为什么叫”闭包“吧。</p>
-<p>​</p>
-<p><strong>好吧，我可能理解了作者的意思，但是比喻方法~不是很理解。</strong></p>
-</li>
-</ul>
+          原文链接国外友人的博客
+单纯的我以为有底层代码可看了，结果。。。以下部分使用“闭包”代替原文中的”Closure”
 
-          
+名字里包含了什么？
+
+如果一门语言可以实现命名，你就可以通过实现中找到命名原因。他们在命名的时候肯定是有目的的。所以当你思考“为什么这么命名”的问题时，你可能就会理解语法的特点和概念
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/06/18/Why-is-it-call-Closure-anyway-A-Swift-Conceptual-Look/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -445,7 +426,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Maguns">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="http://oqaxykewn.bkt.clouddn.com/blog_header.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -469,7 +450,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-15T21:17:20+08:00">
                 2017-06-15
@@ -490,7 +471,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">in</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -530,19 +511,20 @@
       
         
           
-            <h3 id="UI小需求"><a href="#UI小需求" class="headerlink" title="UI小需求"></a>UI小需求</h3><ul>
-<li><p>根据返回数据加载类似朋友圈视图</p>
-<p>思路：通过集合视图，根据返回字段内容实现对应的item类型，模型中计算UI应的高度属性。</p>
-<p>但是在实现的时候遇到了小小的问题。</p>
-<p>最开始使用的是xib实现，拖出NSLayoutConstraint并进行修改。</p>
-<p>最怕但是，这个week引用的NSLayoutConstraint对象只能修改constant/multiplier属性。哪怕~重新制定新的NSLayoutConstraint对象都无济于事。。。虽然修改了对应的NSLayoutConstraint对象，但是确实没有更改布局。</p>
-<p>好吧，按照快速开发的标准（“懒”），准备对应多的子类，子类的大小还是写死的。但是由NetWorkMananger根据数据决定采用哪种item。</p>
-<p>通过加载的数据计算下，对应的item大小。</p>
-<p>除了代码耦合度比较高之外，其他还是很满意的。</p>
-</li>
-</ul>
-
-          
+          UI小需求
+根据返回数据加载类似朋友圈视图
+思路：通过集合视图，根据返回字段内容实现对应的item类型，模型中计算UI应的高度属性。
+但是在实现的时候遇到了小小的问题。
+最开始使用的是xib实现，拖出NSLayoutConstraint并进行修改。
+最怕但是，这个week引用的NSLayoutCon
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/06/15/新的一天/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -589,7 +571,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Maguns">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="http://oqaxykewn.bkt.clouddn.com/blog_header.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -613,7 +595,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-10T17:16:09+08:00">
                 2017-06-10
@@ -634,7 +616,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">in</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -674,12 +656,18 @@
       
         
           
-            <p><div align="center">this article is just to test myblog ,welcome.</div><img src="http://oqaxykewn.bkt.clouddn.com/%E6%B5%B7%E6%BB%A8.jpg" alt="Hello,world."> </p>
-<p>第一次动手去写Bolg，之前有个人和我说：为什么不写博客呢？</p>
-<p>当时的回答是不知道写什么，大多也就是参考他人的东西，拾人牙慧而已。</p>
-<p>现在觉得也不是完全没必要，也算是激励自己的学习记录自己脚步的一种方式，恰好本人懒得写日记。</p>
-
-          
+          this article is just to test myblog ,welcome. 
+第一次动手去写Bolg，之前有个人和我说：为什么不写博客呢？
+当时的回答是不知道写什么，大多也就是参考他人的东西，拾人牙慧而已。
+现在觉得也不是完全没必要，也算是激励自己的学习记录自己脚步的一种方式，恰好本
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/06/10/我的博客/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -745,7 +733,7 @@
       <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
+               src="http://oqaxykewn.bkt.clouddn.com/blog_header.jpg"
                alt="Maguns" />
           <p class="site-author-name" itemprop="name">Maguns</p>
            
@@ -758,7 +746,7 @@
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
                 <span class="site-state-item-count">3</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -769,7 +757,7 @@
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
                 <span class="site-state-item-count">2</span>
-                <span class="site-state-item-name">Kategorien</span>
+                <span class="site-state-item-name">categories</span>
               </a>
             </div>
           
@@ -780,7 +768,7 @@
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
                 <span class="site-state-item-count">2</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               </a>
             </div>
           
@@ -830,13 +818,13 @@
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
   Theme -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
+    NexT.Pisces
   </a>
 </div>
 
@@ -915,6 +903,13 @@
 
   
   
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
 
   
     <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
