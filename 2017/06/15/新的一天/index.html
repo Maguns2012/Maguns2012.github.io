@@ -111,7 +111,7 @@
 <meta property="og:url" content="/2017/06/15/新的一天/index.html">
 <meta property="og:site_name" content="Maguns‘s Blog">
 <meta property="og:description" content="UI小需求 根据返回数据加载类似朋友圈视图 思路：通过集合视图，根据返回字段内容实现对应的item类型，模型中计算UI应的高度属性。 但是在实现的时候遇到了小小的问题。 最开始使用的是xib实现，拖出NSLayoutConstraint并进行修改。 最怕但是，这个week引用的NSLayoutConstraint对象只能修改constant/multiplier属性。哪怕~重新制定新的NSLayo">
-<meta property="og:updated_time" content="2017-06-16T09:30:26.000Z">
+<meta property="og:updated_time" content="2017-06-19T09:02:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="新的一天">
 <meta name="twitter:description" content="UI小需求 根据返回数据加载类似朋友圈视图 思路：通过集合视图，根据返回字段内容实现对应的item类型，模型中计算UI应的高度属性。 但是在实现的时候遇到了小小的问题。 最开始使用的是xib实现，拖出NSLayoutConstraint并进行修改。 最怕但是，这个week引用的NSLayoutConstraint对象只能修改constant/multiplier属性。哪怕~重新制定新的NSLayo">
@@ -214,7 +214,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -224,7 +224,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
-            Kategorien
+            Categories
           </a>
         </li>
       
@@ -234,7 +234,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -314,7 +314,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-15T21:17:20+08:00">
                 2017-06-15
@@ -335,7 +335,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">in</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -387,6 +387,13 @@
 <p>好吧，按照快速开发的标准（“懒”），准备对应多的子类，子类的大小还是写死的。但是由NetWorkMananger根据数据决定采用哪种item。</p>
 <p>通过加载的数据计算下，对应的item大小。</p>
 <p>除了代码耦合度比较高之外，其他还是很满意的。</p>
+</li>
+</ul>
+<ul>
+<li><p>上传多组数组</p>
+<p>需求：上传多组数据，在同一个页面内可能会多次上传。因此需要对比上传的数据源。</p>
+<p>思路：记录当前已上传的数据，每次上传前对比数据。如果没有上传过则上传。</p>
+<p>实现：因为将数据存放在数组中，因此转换成了NSSet对象对比出差集，上传差集数据。</p>
 </li>
 </ul>
 
@@ -492,10 +499,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -516,7 +523,7 @@
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
                 <span class="site-state-item-count">3</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -527,7 +534,7 @@
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
                 <span class="site-state-item-count">2</span>
-                <span class="site-state-item-name">Kategorien</span>
+                <span class="site-state-item-name">categories</span>
               </a>
             </div>
           
@@ -538,7 +545,7 @@
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
                 <span class="site-state-item-count">2</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               </a>
             </div>
           
@@ -604,7 +611,7 @@
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
