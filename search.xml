@@ -4,6 +4,12 @@
     <title><![CDATA[新的格式化方式]]></title>
     <url>%2F2017%2F06%2F28%2F%E6%96%B0%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%96%B9%E5%BC%8F%2F</url>
     <content type="text"></content>
+      <categories>
+        <category>Swift</category>
+      </categories>
+      <tags>
+        <tag>Swift</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[为什么是闭包]]></title>
