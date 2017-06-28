@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[新的格式化方式]]></title>
     <url>%2F2017%2F06%2F28%2F%E6%96%B0%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%96%B9%E5%BC%8F%2F</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[原文链接点击跳转 原文标题是Swift 4 Codable, JSON Handling Made Easy 副标题 Data Can Make You Cry（有没有这么激动） 现在可以用很少的代码实现json的编译与反编译了。虽然有大量的第三方库可以实现该功能，但是Swift系统库也实现了该功能。下面了解一下新的协议。 需求 现在有一个小需求，我们需要发送json数据并释放并释放内存。在Swift3.0时我们需要写大量的工厂代码去进行编译与反编译。现在，当数据结构需要改变或者必须改变呢？我们需要每次重写代码。 对于如此时尚的语言，有没有更好的解决方式？ 解决方案Swift给出了更好的解决方案，更好的是，仅需一个字。Codable继承了2个协议的一个字，仅仅需要继承Codable并通过创建的编译或反编译对象，编译器会很优秀的完成映射操作。 第一步假设我们有个Person的结构体，需要通过编译器实现结构体到json数据的编译，第一步当然是创建结构体。 Struct Person : Codable{ enum Gender:String,Codable { case Male,Female,Alien } var name : String var userName : String var gender:[Gender] } 结构体包含一些变量，像是name,username,gender是一个枚举，用于表示有限的有限制的数据选项。创建一个Person的实例对象 let person = Person(name : &quot;Peter&quot;,userName : &quot;pwitham&quot;,gender :[.Alien]) 编译为json在实现转化之前，需要创建JSONEncoder实例对象，通过创建的数据对象保存编译实例，这里通过String展示对应的数据 let jsonencoder = JSONEncoder() let jsonData = jsonencoder.encode(person) let stringData = String(data : jsonData, encoding : .utf8) printf(stringData) 反编译json在反编译之前，需要创建JSONDecoder实例对象，通过该对象反编译并创建一个容器保存数据。最后打印，查看数据结构 let jsonDecoder = JSONDecoder() let decodePerson = try jsonDecoder.decoder(Person.self,from:jsonData) printf(decodePerson) 包装现在该协议已经翘首以盼。当修改结构体时，Swift4会自动映射转换成对应的数据结构。 在众多第三方库中，也许这才是最好的选择。 （不是很同意，我使用第三方只是为了比较全面的数据类型转化，鬼知道后台传过来的数据到底是什么格式的）]]></content>
       <categories>
         <category>Swift</category>
       </categories>
