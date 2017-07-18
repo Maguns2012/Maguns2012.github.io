@@ -111,7 +111,7 @@
 <meta property="og:url" content="/2017/07/18/CoreAnimation-基础补充/index.html">
 <meta property="og:site_name" content="Maguns‘s Blog">
 <meta property="og:description" content="图层树在UIKit中所有的视图都是基于UIView派生而来，UIView支持触摸时间，可以支持基于CoreGraphics绘图，可以做仿射变换（例如：旋转或缩小），或者简单的类似于滑动或者渐变的动画。   UIView和Layer的关系    CALayer类在概念上和UIView类似，同样也是一些被层级关系树管理的矩形块，同时也是可以包含一些内容（图片、文本或者背景色），管理子视图层的位置。也">
-<meta property="og:updated_time" content="2017-07-18T03:54:48.000Z">
+<meta property="og:updated_time" content="2017-07-18T04:08:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CoreAnimation-基础补充">
 <meta name="twitter:description" content="图层树在UIKit中所有的视图都是基于UIView派生而来，UIView支持触摸时间，可以支持基于CoreGraphics绘图，可以做仿射变换（例如：旋转或缩小），或者简单的类似于滑动或者渐变的动画。   UIView和Layer的关系    CALayer类在概念上和UIView类似，同样也是一些被层级关系树管理的矩形块，同时也是可以包含一些内容（图片、文本或者背景色），管理子视图层的位置。也">
@@ -404,10 +404,7 @@
 <li>多级非线性动画</li>
 </ul>
 <ul>
-<li>使用图层</li>
-</ul>
-<ul>
-<li>首先使用一些layer的属性。创建一个矩形在屏幕上，调整颜色使其与底色可以区分开。称其为layerView<br> （使用超过8.2则可忽略）为layerView添加一个子图层，除了创建一个子控件外也可以创建CALayer再添加到layerView的子图层。尽管UIView暴露了图层的属性，但是标准的Xcode的模板并没有包含Core Animation相关头文件，因此需要添加QuarzCore框架，并引进头文件。<br>  代码</li>
+<li>使用图层<br>首先使用一些layer的属性。创建一个矩形在屏幕上，调整颜色使其与底色可以区分开。称其为layerView<br>（使用超过8.2则可忽略）为layerView添加一个子图层，除了创建一个子控件外也可以创建CALayer再添加到layerView的子图层。尽管UIView暴露了图层的属性，但是标准的Xcode的模板并没有包含Core Animation相关头文件，因此需要添加QuarzCore框架，并引进头文件。<br>代码</li>
 </ul>
 </blockquote>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">CALayer *subLayer = (&#123;</div><div class="line"></div><div class="line">         CALayer * layer = [CALayer layer];</div><div class="line"></div><div class="line">         layer.frame = CGRectMake(100, 100, 25, 25);</div><div class="line"></div><div class="line">         layer.backgroundColor = [UIColor blueColor].CGColor;</div><div class="line"></div><div class="line">         layer;</div><div class="line"></div><div class="line">     &#125;);</div><div class="line"></div><div class="line">  [layerView.layer addSublayer:subLayer];</div></pre></td></tr></table></figure>
@@ -506,16 +503,14 @@
 <ul>
 <li><h3 id="图层几何学"><a href="#图层几何学" class="headerlink" title="图层几何学"></a>图层几何学</h3></li>
 </ul>
-<ul>
-<li><h4 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h4><p>UIView主要的三种布局属性:frame,bounds和center。CALayer与之对应的属性为frame,bounds和position。其中center和position属性是针对于父图层的anchorPiont所在的位置。</p>
+<h5 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h5><p>UIView主要的三种布局属性:frame,bounds和center。CALayer与之对应的属性为frame,bounds和position。其中center和position属性是针对于父图层的anchorPiont所在的位置。</p>
 <p>在操作UIView的frame、bounds和center属性时，实际上对应修改的是CALayer的属性。</p>
 <p>frame是一个虚拟属性，是根据bounds、position和transform计算出来的，修改frame是对应修改其他值，修改其他值时会影响frame。当frame进行了变换之后，frame的宽高对应变换之后的宽高，这时bounds的宽高与frame的宽高就不在一样了。</p>
-</li>
-<li><h4 id="锚点"><a href="#锚点" class="headerlink" title="锚点"></a>锚点</h4><p>视图的center和position属性指定了anchorPoint相对于父视图的位置。图层的anchorPoint通过position来控制frame的位置，可以认为anchorPoint是一定的把柄。</p>
+<hr>
+<p>视图的center和position属性指定了anchorPoint相对于父视图的位置。图层的anchorPoint通过position来控制frame的位置，可以认为anchorPoint是一定的把柄。</p>
 <p>默认anchorPoint在图层中间，这也是UIView把position对应center属性的原因。但图层的anchorPoint可以被移动。</p>
 <p>和contentReck与contentCenter属性类似，anchorPoint也是单位坐标。默认值是{0.5,0.5}，也可以放在图层之外。</p>
-</li>
-<li><h4 id="坐标系"><a href="#坐标系" class="headerlink" title="坐标系"></a>坐标系</h4><p>和视图一样，图层在图层树中也是相对于父图层按层级关系放置，一个图层的position依赖于他父图层的bounds，如果父图层发生移动子图层也会跟着移动。</p>
+<h5 id="坐标系"><a href="#坐标系" class="headerlink" title="坐标系"></a>坐标系</h5><p>和视图一样，图层在图层树中也是相对于父图层按层级关系放置，一个图层的position依赖于他父图层的bounds，如果父图层发生移动子图层也会跟着移动。</p>
 <p>这样的层级关系当处理整体移动时，相当遍历。但当需要知道一个图层相对于另一个图层的相对或绝对位置时，CALayer提供了转换工具方法。</p>
 <blockquote>
 <p>-(CGPoint)convertPoint:(CGPoint) fromLayer:(CALayer*)</p>
@@ -524,38 +519,29 @@
 <p>-(CGRect)converRect:(CGRect) toLayer:(CALayer*)</p>
 </blockquote>
 <p>这些方法用于将指定图层下的点或区域转换成另一个图层下的点或区域</p>
-</li>
-<li><h4 id="翻转的几何结构"><a href="#翻转的几何结构" class="headerlink" title="翻转的几何结构"></a>翻转的几何结构</h4><p>通常，在iOS上position位与父图层的左上角，而MAC位于左下角。Core Animation通过geometryFlipped属性来适配这种情况，决定是否相对于父视图垂直翻转。如果在iOS上设置为YES，则会导致该视图的所有子视图，都会以底部排版而不是顶部排版。</p>
-</li>
-<li><h4 id="Z坐标轴"><a href="#Z坐标轴" class="headerlink" title="Z坐标轴"></a>Z坐标轴</h4><p>与UIView严格的二维坐标不同，CALayer存在于三维空间中，CALayer的另外2个属性，zPosition和anchorPointZ都是在Z轴上描述位置的浮点数。</p>
+<h5 id="翻转的几何结构"><a href="#翻转的几何结构" class="headerlink" title="翻转的几何结构"></a>翻转的几何结构</h5><p>通常，在iOS上position位与父图层的左上角，而MAC位于左下角。Core Animation通过geometryFlipped属性来适配这种情况，决定是否相对于父视图垂直翻转。如果在iOS上设置为YES，则会导致该视图的所有子视图，都会以底部排版而不是顶部排版。</p>
+<h5 id="Z坐标轴"><a href="#Z坐标轴" class="headerlink" title="Z坐标轴"></a>Z坐标轴</h5><p>与UIView严格的二维坐标不同，CALayer存在于三维空间中，CALayer的另外2个属性，zPosition和anchorPointZ都是在Z轴上描述位置的浮点数。</p>
 <p>zPosition并不常用，除了变换之外，最实用的功能就是改变视图的顺序。</p>
-</li>
-<li><h4 id="Hit-Testing"><a href="#Hit-Testing" class="headerlink" title="Hit Testing"></a>Hit Testing</h4><p>不建议创建独立的图层，还有一个重要的原因就是不用处理额外的复杂触摸事件。CALayer一般不处理响应者链事件，所以不能处理事件或手势。但还是提供了方法用于可能的需求</p>
+<h5 id="Hit-Testing"><a href="#Hit-Testing" class="headerlink" title="Hit Testing"></a>Hit Testing</h5><p>不建议创建独立的图层，还有一个重要的原因就是不用处理额外的复杂触摸事件。CALayer一般不处理响应者链事件，所以不能处理事件或手势。但还是提供了方法用于可能的需求</p>
 <blockquote>
 <p>-(BOOL)containtPoint:(CGPoint)</p>
 <p>-(CALayer*)hitTest:(CGPoint)</p>
 </blockquote>
 <p>containtPoint当前图层是否包含该点，而hitTest用于该点坐在的CALayer对象。</p>
-</li>
-<li><h4 id="自动布局"><a href="#自动布局" class="headerlink" title="自动布局"></a>自动布局</h4><p>不建议创建独立图层的另一个原因，CALayer在iOS上不能自动适配。CALayerManger协议和CAConstrainLayerManger类仅限MacOS，重写-layoutSublayerOfLayer:(CALayer*)方法，当调用setNeedLayout时会调用该方法，来重新布局。</p>
+<h5 id="自动布局"><a href="#自动布局" class="headerlink" title="自动布局"></a>自动布局</h5><p>不建议创建独立图层的另一个原因，CALayer在iOS上不能自动适配。CALayerManger协议和CAConstrainLayerManger类仅限MacOS，重写-layoutSublayerOfLayer:(CALayer*)方法，当调用setNeedLayout时会调用该方法，来重新布局。</p>
 <p>因此建议使用UIView，UIView提供了autoresizingMask和constrains属性来使用屏幕旋转。</p>
-</li>
-<li><h3 id="视觉效果"><a href="#视觉效果" class="headerlink" title="视觉效果"></a>视觉效果</h3><ul>
-<li><h5 id="圆角"><a href="#圆角" class="headerlink" title="圆角"></a>圆角</h5><p>CALayer的属性connerRadius控制着圆角的曲率（默认为0，即直角）。该属性只影响背景颜色，不影响子图层和背景图，当设置masksToBounds为YES是，图层内所有都系都会被截取。</p>
-</li>
-<li><h5 id="图层边框"><a href="#图层边框" class="headerlink" title="图层边框"></a>图层边框</h5><p>CALayer的borderWidth和borderColor属性，定义了边框的绘制样式。这条线会沿着图层的bounds绘制，当然也包括圆角。</p>
+<ul>
+<li><h3 id="视觉效果"><a href="#视觉效果" class="headerlink" title="视觉效果"></a>视觉效果</h3><h5 id="圆角"><a href="#圆角" class="headerlink" title="圆角"></a>圆角</h5><p>CALayer的属性connerRadius控制着圆角的曲率（默认为0，即直角）。该属性只影响背景颜色，不影响子图层和背景图，当设置masksToBounds为YES是，图层内所有都系都会被截取。</p>
+<h5 id="图层边框"><a href="#图层边框" class="headerlink" title="图层边框"></a>图层边框</h5><p>CALayer的borderWidth和borderColor属性，定义了边框的绘制样式。这条线会沿着图层的bounds绘制，当然也包括圆角。</p>
 <p>borderColor是CGColorRef类型，非Cocoa内置对象，虽然在持有和释放上和NSObect类似，但是只能使用assgin声明。边框是跟随着图层边界变化的而非图层的内容。</p>
-</li>
-<li><h5 id="阴影"><a href="#阴影" class="headerlink" title="阴影"></a>阴影</h5><p>shadowOpacity阴影不可见度（默认是指0），数值在0.0 ~ 1.0间的浮点数。如果要对阴影进行编辑可以操作:shadowColor、shadowOffset、shadowRadius和shadowPath四个属性。</p>
+<h5 id="阴影"><a href="#阴影" class="headerlink" title="阴影"></a>阴影</h5><p>shadowOpacity阴影不可见度（默认是指0），数值在0.0 ~ 1.0间的浮点数。如果要对阴影进行编辑可以操作:shadowColor、shadowOffset、shadowRadius和shadowPath四个属性。</p>
 <p>shadowOffset默认值是{0,-3}，所以默认阴影会向上偏移。由于Core Animation是从图层套装演变而来（可以认为是iOS的私有动画框架），但确是由Mac先问世的。</p>
 <p>shadowRadius控制着阴影的模糊度（默认值0），数值越大阴影和图层的边界就越不明显。</p>
 <p>shadowPath控制隐形的形状，是一个CGPathRef类型，属于Core Graphics框架。</p>
-</li>
-<li><h5 id="图层蒙板"><a href="#图层蒙板" class="headerlink" title="图层蒙板"></a>图层蒙板</h5><p>可以通过masksToBounds裁剪图层，可以通过borderCoor等属性控制阴影。可以通过图片展示图形，但是都不能动态的绘制生成图层蒙板，也不能让子图层被剪裁成同样的形状。</p>
+<h5 id="图层蒙板"><a href="#图层蒙板" class="headerlink" title="图层蒙板"></a>图层蒙板</h5><p>可以通过masksToBounds裁剪图层，可以通过borderCoor等属性控制阴影。可以通过图片展示图形，但是都不能动态的绘制生成图层蒙板，也不能让子图层被剪裁成同样的形状。</p>
 <p>mask属性，类型就是CALayer，致使父图层根据mask的轮廓绘制。</p>
 <p>因为本身是动态属性，可以被做成动画。</p>
-</li>
-<li><h5 id="拉伸和过滤"><a href="#拉伸和过滤" class="headerlink" title="拉伸和过滤"></a>拉伸和过滤</h5><p>minificationFilter和maginficationFilter属性。总的来说，当显示一个图片的时候应该是1:1，即等比显示。原因如下：</p>
+<h5 id="拉伸和过滤"><a href="#拉伸和过滤" class="headerlink" title="拉伸和过滤"></a>拉伸和过滤</h5><p>minificationFilter和maginficationFilter属性。总的来说，当显示一个图片的时候应该是1:1，即等比显示。原因如下：</p>
 <ul>
 <li>能够显示更好的画质，像素没有被压缩也没有被拉伸。</li>
 <li>能更好的使用内存。</li>
@@ -577,18 +563,14 @@
 <p>针对于没有斜线的小图来说，最近过滤算法很好</p>
 <p>总结：线性算法保留了形状，就近算法保留了像素差异</p>
 </blockquote>
-</li>
-<li><h5 id="组透明"><a href="#组透明" class="headerlink" title="组透明"></a>组透明</h5><p>相对于UIView的alpha属性，CALayer的属性是opacity，这两个属性会影响子图层。</p>
+<h5 id="组透明"><a href="#组透明" class="headerlink" title="组透明"></a>组透明</h5><p>相对于UIView的alpha属性，CALayer的属性是opacity，这两个属性会影响子图层。</p>
 <p>但是如果视图包含子视图，子视图的背景色会对透明造成困扰。这时候可以配置组透明。</p>
 <blockquote>
 <p>1、首先在plist文件中添加UIViewGroupOpacity属性设置为YES。</p>
 <p>2、CALayer的属性shouldRasterize设置成YES。（设置前，图层和子图层会被视为一个整体，从而不会有透明混合问题）如果设置了该属性，就需要调整rasterizationScale属性匹配屏幕（默认值1.0），否则在Retain屏幕上可能出现像素化问题。</p>
 </blockquote>
 </li>
-</ul>
-</li>
-<li><h4 id="变换"><a href="#变换" class="headerlink" title="变换"></a>变换</h4><ul>
-<li><h5 id="反射变换"><a href="#反射变换" class="headerlink" title="反射变换"></a>反射变换</h5><p>UIView的transform属性是一个CGAffineTransform类型，可用于二维空间坐旋转、缩放和平移等。</p>
+<li><h4 id="变换"><a href="#变换" class="headerlink" title="变换"></a>变换</h4><h5 id="反射变换"><a href="#反射变换" class="headerlink" title="反射变换"></a>反射变换</h5><p>UIView的transform属性是一个CGAffineTransform类型，可用于二维空间坐旋转、缩放和平移等。</p>
 <p>CALayer也有transform属性但是接收的是CATransform3D。对应二维变换的属性是affineTransform</p>
 <p>二维变换主要函数如下：</p>
 <blockquote>
@@ -611,7 +593,7 @@
 <blockquote>
 <p>CGAffineTransformConcat(CGAffineTransform t1,CGAffineTransform t2)</p>
 </blockquote>
-<h5 id="变换的顺序影响变换结果"><a href="#变换的顺序影响变换结果" class="headerlink" title="变换的顺序影响变换结果"></a>变换的顺序影响变换结果</h5></li>
+<h5 id="变换的顺序影响变换结果"><a href="#变换的顺序影响变换结果" class="headerlink" title="变换的顺序影响变换结果"></a>变换的顺序影响变换结果</h5><ul>
 <li><h5 id="3D变换"><a href="#3D变换" class="headerlink" title="3D变换"></a>3D变换</h5><p>CATransform3D和CGAfineTransform不同，前者由Core Animation 框架提供的，相对于后者提供了z轴接口。后者是由Core Graphices提供严谨的2D绘制。</p>
 <p>常用函数:</p>
 <blockquote>
@@ -635,8 +617,7 @@
 </li>
 </ul>
 </li>
-<li><h4 id="专用图层"><a href="#专用图层" class="headerlink" title="专用图层"></a>专用图层</h4><ul>
-<li><h5 id="CAShapeLayer"><a href="#CAShapeLayer" class="headerlink" title="CAShapeLayer"></a>CAShapeLayer</h5><p>CAShaoeLayer是通过一个矢量图而不是bitmap绘制绘制图层子类。可以指定颜色和线宽等属性，使用CGPath定义绘制路径，最后通过CAShapeLayer自定渲染。当然也可以使用Core Graphics 进行绘制，但使用CAShapeLayer有如下有点</p>
+<li><h4 id="专用图层"><a href="#专用图层" class="headerlink" title="专用图层"></a>专用图层</h4><h5 id="CAShapeLayer"><a href="#CAShapeLayer" class="headerlink" title="CAShapeLayer"></a>CAShapeLayer</h5><p>CAShaoeLayer是通过一个矢量图而不是bitmap绘制绘制图层子类。可以指定颜色和线宽等属性，使用CGPath定义绘制路径，最后通过CAShapeLayer自定渲染。当然也可以使用Core Graphics 进行绘制，但使用CAShapeLayer有如下有点</p>
 <blockquote>
 <ul>
 <li>渲染速度快。启用硬件加速。</li>
@@ -646,8 +627,7 @@
 </ul>
 </blockquote>
 <p>性能更优越的圆角方案，通过BezierPath更具当前寄宿图绘制圆角矩形，把路径赋值更CAShapeLayer的path属性，不创建寄宿图，没有优化问题。😁</p>
-</li>
-<li><h5 id="CATextLayer"><a href="#CATextLayer" class="headerlink" title="CATextLayer"></a>CATextLayer</h5><p>UILabel的核心绘制方法，<em> UILabel在iOS6之前是使用WebKit实现的绘制的 </em>。</p>
+<h5 id="CATextLayer"><a href="#CATextLayer" class="headerlink" title="CATextLayer"></a>CATextLayer</h5><p>UILabel的核心绘制方法，<em> UILabel在iOS6之前是使用WebKit实现的绘制的 </em>。</p>
 <p>优点：</p>
 <blockquote>
 <ul>
@@ -664,13 +644,8 @@
 <li>string接收NSString或NSAttributedString。</li>
 </ul>
 </blockquote>
-<ul>
-<li><p>替换UILabel的绘制方案</p>
-<p>实现一个UILabel的子类，修改其寄宿图类型（UIView会通过+layerClass方法获取寄宿图类型），利用UIView和CALayer的平行层级关系，只要重写部分赋值代码，即可。</p>
-</li>
-</ul>
-</li>
-<li><h5 id="CATransformLayer"><a href="#CATransformLayer" class="headerlink" title="CATransformLayer"></a>CATransformLayer</h5><p>不同于其他的CALayer子类，他不会扁平化子图层。即不会将Z = 0，子图层将包有原来的层级和绘制3D关系。</p>
+<h5 id="替换UILabel的绘制方案"><a href="#替换UILabel的绘制方案" class="headerlink" title="替换UILabel的绘制方案"></a>替换UILabel的绘制方案</h5><p>实现一个UILabel的子类，修改其寄宿图类型（UIView会通过+layerClass方法获取寄宿图类型），利用UIView和CALayer的平行层级关系，只要重写部分赋值代码，即可。</p>
+<h5 id="CATransformLayer"><a href="#CATransformLayer" class="headerlink" title="CATransformLayer"></a>CATransformLayer</h5><p>不同于其他的CALayer子类，他不会扁平化子图层。即不会将Z = 0，子图层将包有原来的层级和绘制3D关系。</p>
 <p>相对于其他CALayer，不会被实现的属性有：</p>
 <blockquote>
 <ul>
@@ -680,8 +655,7 @@
 <li>不应调用hitTest:方法，应为可能该图层没有2D坐标对应。</li>
 </ul>
 </blockquote>
-</li>
-<li><h5 id="CAGradientLayer"><a href="#CAGradientLayer" class="headerlink" title="CAGradientLayer"></a>CAGradientLayer</h5><p>用于绘制一或多种渐变色的图层。使用Core Graphics 绘制一个CAGradientLayer实现渐变色也是可以的，但是CAGradientLayer绘制开启了硬件加速所以更为快速。</p>
+<h5 id="CAGradientLayer"><a href="#CAGradientLayer" class="headerlink" title="CAGradientLayer"></a>CAGradientLayer</h5><p>用于绘制一或多种渐变色的图层。使用Core Graphics 绘制一个CAGradientLayer实现渐变色也是可以的，但是CAGradientLayer绘制开启了硬件加速所以更为快速。</p>
 <p>常用属性：</p>
 <blockquote>
 <ul>
@@ -691,8 +665,7 @@
 <li>type 绘制类型</li>
 </ul>
 </blockquote>
-</li>
-<li><h5 id="CAReplicatorLayer"><a href="#CAReplicatorLayer" class="headerlink" title="CAReplicatorLayer"></a>CAReplicatorLayer</h5><p>用于绘制指定数量并复制几何变化，颜色和时间参数等属性的Layer。</p>
+<h5 id="CAReplicatorLayer"><a href="#CAReplicatorLayer" class="headerlink" title="CAReplicatorLayer"></a>CAReplicatorLayer</h5><p>用于绘制指定数量并复制几何变化，颜色和时间参数等属性的Layer。</p>
 <p>常用属性：</p>
 <blockquote>
 <ul>
@@ -706,11 +679,10 @@
 <p>提示：</p>
 <p>目前hitTest:只测试了第一个Layer，之后可能会完善。（也就是当调用这个方法在复制的图层是可能返回不正确）😅</p>
 </blockquote>
-</li>
-<li><p>CAEmitterLayer</p>
-<p>用于绘制粒子效果的图层</p>
+<h5 id="CAEmitterLayer"><a href="#CAEmitterLayer" class="headerlink" title="CAEmitterLayer"></a>CAEmitterLayer</h5><p>用于绘制粒子效果的图层</p>
 <ul>
-<li><p>CAEmitterCell</p>
+<li><h5 id="CAEmitterCell"><a href="#CAEmitterCell" class="headerlink" title="CAEmitterCell"></a>CAEmitterCell</h5></li>
+</ul>
 <p>绘制粒子效果时的子图层</p>
 <p>常用属性有:</p>
 <blockquote>
@@ -735,8 +707,6 @@
 <p>-shouldArchiveValueForKey: 检查时候包含这个键</p>
 <p>+defaultValueForKey: 设置键值</p>
 </blockquote>
-</li>
-</ul>
 <p>常用属性有：</p>
 <blockquote>
 <p>emitterCells 包含的cell类型</p>
@@ -750,9 +720,8 @@
 <p>Emitter Mode 定义了发射模式 相关属性emitterMode</p>
 <p>Emitter Render Order 发射顺序 对应属性renderMode</p>
 </blockquote>
-</li>
-<li><p>CAScrollLayer</p>
-</li>
+<ul>
+<li>CAScrollLayer</li>
 </ul>
 <p>类似于ScrollView的图层，可用于显示实际大小大于自身的视图。</p>
 <p>系统提供了:</p>
@@ -774,8 +743,7 @@
 <p>levelOfDetailBias 可放大倍数，默认为0。（如果为2则可放大至2x和4x）​</p>
 </blockquote>
 </li>
-<li><h4 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h4><ul>
-<li><h5 id="隐式动画"><a href="#隐式动画" class="headerlink" title="隐式动画"></a>隐式动画</h5><p>当修改CALayer可动画属性是默认由CATransation默认执行了0.25秒的动画，CATransation没有创建方法，仅提供+commit和+begin方法。（而UIView的beginAnimation：/commitAnimation还有block动画等方法都是对CATransation的封装。）</p>
+<li><h4 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h4><h5 id="隐式动画"><a href="#隐式动画" class="headerlink" title="隐式动画"></a>隐式动画</h5><p>当修改CALayer可动画属性是默认由CATransation默认执行了0.25秒的动画，CATransation没有创建方法，仅提供+commit和+begin方法。（而UIView的beginAnimation：/commitAnimation还有block动画等方法都是对CATransation的封装。）</p>
 <p>隐式动画执行步骤：</p>
 <blockquote>
 <ul>
@@ -795,8 +763,7 @@
 <li>设置action字典，供调用时获取</li>
 </ul>
 </blockquote>
-</li>
-<li><h5 id="呈现与模型"><a href="#呈现与模型" class="headerlink" title="呈现与模型"></a>呈现与模型</h5><p>CALayer的默认设置很不正常，改变一个值为什么会有一个过程。是因为CoreAnimation扮演了一个控制器的角色，根据图层行为和事务设置刷新屏幕的显示状态。这是一个典型的MVC模型，CALayer负责显示和存储视图模型。</p>
+<h5 id="呈现与模型"><a href="#呈现与模型" class="headerlink" title="呈现与模型"></a>呈现与模型</h5><p>CALayer的默认设置很不正常，改变一个值为什么会有一个过程。是因为CoreAnimation扮演了一个控制器的角色，根据图层行为和事务设置刷新屏幕的显示状态。这是一个典型的MVC模型，CALayer负责显示和存储视图模型。</p>
 <p>因为屏幕每秒刷新60次，只要动画时间比60分1秒长，CoreAnimation需要绘制中间值，意味着CALayer需要存储中间值，每个图层的显示值都会被存放在一个叫呈现图层的独立图层中，可以通过-presentationLayer进行访问，这个呈现层实际上是模型图层的复制，但它的属性值代表了任意时刻下当前图层的外观效果，也就是说该图层是当前图层的显示出来的值。</p>
 <p>呈现树由当前图层中所有的呈现图层所形成。呈现图层仅仅当首次被提交是才存在，之前调用时不存在的。-modelLayer返回呈现所依赖的Layer通常是self。</p>
 <p>利用呈现图层：</p>
@@ -806,10 +773,7 @@
 <li>当需要在变换过程中进行交互时，由presnetationLayer来处理交互，展示更为合理。</li>
 </ul>
 </blockquote>
-</li>
-<li><h5 id="显示动画"><a href="#显示动画" class="headerlink" title="显示动画"></a>显示动画</h5><p>​</p>
-</li>
-<li><h5 id="取消动画"><a href="#取消动画" class="headerlink" title="取消动画"></a>取消动画</h5><p>CALayer的方法可以获取和移除对应的动画</p>
+<h5 id="取消动画"><a href="#取消动画" class="headerlink" title="取消动画"></a>取消动画</h5><p>CALayer的方法可以获取和移除对应的动画</p>
 <blockquote>
 <p>-(CAAnimation*)animationForKey:</p>
 <p>-removeAnimationForKey:</p>
@@ -817,21 +781,16 @@
 </blockquote>
 <p>当动画被移除，图层的外观将立刻更新到当前模型图层的值。除非在设置动画对象的属性removedOnCompletion为NO，否则动画将一直保存，知道图层被销毁。</p>
 </li>
-</ul>
-</li>
 <li><h4 id="图层时间"><a href="#图层时间" class="headerlink" title="图层时间"></a>图层时间</h4><p>CAMediaTiming协议，定义了一段动画内用来控制逝去时间的属性的集合。CALayer、CAAnimation和CAEmitterCell都实现了该协议，所以时间可以被任意基于基于一个图层或这一段动画的类控制。</p>
-<ul>
-<li><h5 id="持续和重复"><a href="#持续和重复" class="headerlink" title="持续和重复"></a>持续和重复</h5><p>协议中duration和repeatCount属性分别是单词持续时间和重复次数，假设一个动画的duration为2，repeatCount位2.5次那么动画的播放时间就是5秒。</p>
+<h5 id="持续和重复"><a href="#持续和重复" class="headerlink" title="持续和重复"></a>持续和重复</h5><p>协议中duration和repeatCount属性分别是单词持续时间和重复次数，假设一个动画的duration为2，repeatCount位2.5次那么动画的播放时间就是5秒。</p>
 <p>假设duration和repeatCount都为0，不表示不执行动画。仅代表默认值，0.25秒和1次。还有2个比较有意思的控制属性，repeatDuration和autoreverses,repeatDuration和repeatCount相似当设置为INFINITY时都将无限重复下去，而autoreverses则表示方向动画，即方向重复动画效果，因此，可以设置一些连续的非重复动画。</p>
-</li>
-<li><h5 id="相对时间"><a href="#相对时间" class="headerlink" title="相对时间"></a>相对时间</h5><p>Core Animation中定义了时间，所有的时间都是相对的。每个动画都有自己的描述时间，可以单独加速或者设置偏移。</p>
+<h5 id="相对时间"><a href="#相对时间" class="headerlink" title="相对时间"></a>相对时间</h5><p>Core Animation中定义了时间，所有的时间都是相对的。每个动画都有自己的描述时间，可以单独加速或者设置偏移。</p>
 <blockquote>
 <p>beginTime 动画开始的延迟，默认0.即加载到视图上立刻开始动画</p>
 <p>timeOffset 快进到某一位置</p>
 <p>speed 动画播放速度</p>
 </blockquote>
-</li>
-<li><h5 id="fillMode"><a href="#fillMode" class="headerlink" title="fillMode"></a>fillMode</h5><p>对于beginTime非0的动画会出现，加载到图层上什么都没发生的状态，在autoreverses是默认值NO的图层上在动画结束时保持之前的状态。在动画开始之前和结束之后，被设置的动画属性将会是什么。</p>
+<h5 id="fillMode"><a href="#fillMode" class="headerlink" title="fillMode"></a>fillMode</h5><p>对于beginTime非0的动画会出现，加载到图层上什么都没发生的状态，在autoreverses是默认值NO的图层上在动画结束时保持之前的状态。在动画开始之前和结束之后，被设置的动画属性将会是什么。</p>
 <p>一种可能属性和动画没被添加之前保持一致，也就是模型图层定义的值。</p>
 <p>另一种可能保持动画开始的那一帧和结束的那一帧，这就是所谓的填充，用动画开始的值和结束的值，填充动画开始之前和结束之后的时间。</p>
 <p>fillMode属性如下</p>
@@ -846,14 +805,10 @@
 <p>需要将animation对象设置为键值非空，可以在动画完成后手动移除。</p>
 <p>修改removedOnCompletion为NO（默认为YES）</p>
 </blockquote>
-</li>
-<li><h5 id="手动动画"><a href="#手动动画" class="headerlink" title="手动动画"></a>手动动画</h5><p>通过修改timeOffset来控制动画的进度，当speed为0是，动画不自动播放，可以通过设置timeOffset的值来达到执行动画的目的。在使用复杂动画组的时候尤为明显。</p>
-</li>
-</ul>
+<h5 id="手动动画"><a href="#手动动画" class="headerlink" title="手动动画"></a>手动动画</h5><p>通过修改timeOffset来控制动画的进度，当speed为0是，动画不自动播放，可以通过设置timeOffset的值来达到执行动画的目的。在使用复杂动画组的时候尤为明显。</p>
 </li>
 <li><h4 id="缓冲"><a href="#缓冲" class="headerlink" title="缓冲"></a>缓冲</h4><p>Core Animation 使用缓冲使动画更为平缓和自然。</p>
-<ul>
-<li><h5 id="动画速度"><a href="#动画速度" class="headerlink" title="动画速度"></a>动画速度</h5><p>动画实际就是一段时间内的变换，也暗示着动画会随着某一特定的速率进行。</p>
+<h5 id="动画速度"><a href="#动画速度" class="headerlink" title="动画速度"></a>动画速度</h5><p>动画实际就是一段时间内的变换，也暗示着动画会随着某一特定的速率进行。</p>
 <p>速度速率计算如下</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">velocity = change / time</div></pre></td></tr></table></figure>
 <p>这里的速度可以时移动的距离，也可以是背景颜色等可设置动画效果的属性。</p>
@@ -866,24 +821,19 @@
 <p>kCAMediaTimingFunctionEaseInEaseOut 缓慢结束缓慢开始</p>
 <p>kCAMediaTimingFunctionDefault 相对于上面的选项开始速度快和结束的速度更为缓慢，因此也更为真实（UIView动画默认函数）</p>
 </blockquote>
-</li>
-<li><h5 id="UIView的动画缓冲"><a href="#UIView的动画缓冲" class="headerlink" title="UIView的动画缓冲"></a>UIView的动画缓冲</h5><p>UIKit动画也有缓冲函数，option选项如下：</p>
+<h5 id="UIView的动画缓冲"><a href="#UIView的动画缓冲" class="headerlink" title="UIView的动画缓冲"></a>UIView的动画缓冲</h5><p>UIKit动画也有缓冲函数，option选项如下：</p>
 <blockquote>
 <p>UIViewAnimationOptionCurveEaseInOut （默认值）</p>
 <p>UIViewAnimationOptionCurveEaseIn</p>
 <p>UIViewAnimationOptionCurveEaseOut</p>
 <p>UIViewAnimationOptionLinear</p>
 </blockquote>
-</li>
-<li><h5 id="缓冲和关键帧动画"><a href="#缓冲和关键帧动画" class="headerlink" title="缓冲和关键帧动画"></a>缓冲和关键帧动画</h5><p>CAKeyframeAnimation有一个NSArray类型的属性timeFunctions。当设置时，其数量一定要是keyframes数组的元素减一个，因为该函数式描述2个属性动画速度的函数。</p>
-</li>
-<li><h5 id="自定义缓冲函数"><a href="#自定义缓冲函数" class="headerlink" title="自定义缓冲函数"></a>自定义缓冲函数</h5><p>除了functionWithName:外，CAMediaTimingFunction还提供给了+functionWithControlPoints::::和-initWithControlPoint::::函数，用于提供自定义缓冲函数，使用三次贝塞尔曲线将输入的时间转化为起点和终点之间的成比例改变。</p>
+<h5 id="缓冲和关键帧动画"><a href="#缓冲和关键帧动画" class="headerlink" title="缓冲和关键帧动画"></a>缓冲和关键帧动画</h5><p>CAKeyframeAnimation有一个NSArray类型的属性timeFunctions。当设置时，其数量一定要是keyframes数组的元素减一个，因为该函数式描述2个属性动画速度的函数。</p>
+<h5 id="自定义缓冲函数"><a href="#自定义缓冲函数" class="headerlink" title="自定义缓冲函数"></a>自定义缓冲函数</h5><p>除了functionWithName:外，CAMediaTimingFunction还提供给了+functionWithControlPoints::::和-initWithControlPoint::::函数，用于提供自定义缓冲函数，使用三次贝塞尔曲线将输入的时间转化为起点和终点之间的成比例改变。</p>
 <p>可以通过CAMediaTimingFunction提供的-getControlPointAtPoint:Values:方法（point参数必须介于0 ~ 3之间），获取的Value是个float[]数组，传入对应指针可以获取这个点的值。</p>
 <p>因为本身是范围坐标，开始点{0,0}结束点{1,1}。可以通过UIBezierPath和CAShapeLayer绘制出来，这也许就是为什么返回值是float数组的原因（必将方便取值…）。</p>
-</li>
-<li><h5 id="更为复杂的缓冲动画"><a href="#更为复杂的缓冲动画" class="headerlink" title="更为复杂的缓冲动画"></a>更为复杂的缓冲动画</h5><p>当时需要实现类似球体落地缓冲效果时，单纯依靠三次贝塞尔曲线可能无法完成，一次可以借助CAKeyframeAnimation设置多次动画过度函数和对应的值，进行仿真函数展示。</p>
-</li>
-<li><h5 id="自动化流程"><a href="#自动化流程" class="headerlink" title="自动化流程"></a>自动化流程</h5><p>如果将复杂函数中的划分为更为细小的步骤，利用关键帧动画就可以实现动画的自定义变换（不用去自己绘制贝塞尔曲线）。</p>
+<h5 id="更为复杂的缓冲动画"><a href="#更为复杂的缓冲动画" class="headerlink" title="更为复杂的缓冲动画"></a>更为复杂的缓冲动画</h5><p>当时需要实现类似球体落地缓冲效果时，单纯依靠三次贝塞尔曲线可能无法完成，一次可以借助CAKeyframeAnimation设置多次动画过度函数和对应的值，进行仿真函数展示。</p>
+<h6 id="自动化流程"><a href="#自动化流程" class="headerlink" title="自动化流程"></a>自动化流程</h6><p>如果将复杂函数中的划分为更为细小的步骤，利用关键帧动画就可以实现动画的自定义变换（不用去自己绘制贝塞尔曲线）。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">value = (endvalue - startvalue) * time + startvalue</div></pre></td></tr></table></figure>
 <p>代码示例：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">float interpolate(float from,float to,float time)&#123;</div><div class="line">  return (to - from) * time + from;</div><div class="line">&#125;</div><div class="line">- (id)interpolateFromeValue:(id)fromeValue ToValue:(id)toValue Time:(float)time&#123;</div><div class="line">  const char *type = [fromValue objCType];</div><div class="line">  if (strcmp(type,@encode(CGPoint))== 0)&#123;</div><div class="line">    CGPoint from = [fromeValue CGPointValue];</div><div class="line">    CGPoint to = [toValue CGPointValue];</div><div class="line">    CGPoint result = CGPointMake(interpolate(from.x,to.x,time),interpolate(from.y,to.y,time));</div><div class="line">    return [NSValue valueWithPoint:result];</div><div class="line">  &#125;</div><div class="line">  return time &lt; 0.5?formValue:toVlaue;</div><div class="line">&#125;</div><div class="line">- animation&#123;</div><div class="line">  self.ballView.center = CGPointMake(150,32);</div><div class="line">  NSValue *fromeValue = [NSValue valueWithPoint:CGPointMake(150,32)];</div><div class="line">  NSValue *toValue = [NSValue valueWithPoint:CGPointMake(150,268)];</div><div class="line">  CFTimeInterval duration = 1;</div><div class="line">  NSInteger numberCount = duration * 60;//每秒60帧</div><div class="line">  NSMutableArray * frame = [NSMutableArray arrayWithCapacity:numberCount];</div><div class="line">  for(int i = 0 ,i &lt; numberCount,i ++)&#123;</div><div class="line">    float time = i / (float)numberCount; </div><div class="line">    [frame addObject:[self interpolateFromeValue:fromValue ToValue:toValue Time:time]];</div><div class="line">  &#125;</div><div class="line">  CAKeyframeAnimation *animation = [CAKeyframeAniamtion animation];</div><div class="line">  animation.keyPath = @&quot;position&quot;;</div><div class="line">  animation.duration = 1.0;</div><div class="line">  animation.values = frame;</div><div class="line">  [self.ballView.layer addAniamtion:animation forKey:nil];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -893,10 +843,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">float boundsEaseOut(float t)&#123;</div><div class="line">  if(t &lt; 4/11.0)&#123;</div><div class="line">    return (121 * t * t) / 16.0;</div><div class="line">  &#125;else if(t &lt; 8/11.0)&#123;</div><div class="line">    return (365 / 40.0 * t * t) - (99 /10.0 * t) + 17/5.0;</div><div class="line">  &#125;else if (t &lt; 9/11.0)&#123;</div><div class="line">    return (4365 /361.0 * t * t) - (35442 / 1805.0 *t) + 16061/1805.0;</div><div class="line">  &#125;else&#123;</div><div class="line">    return (54/5.0 * t * t) - (513 / 25.0 * t) + 268 /25.0;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>替换实现函数，即可修改动画效果。</p>
 </li>
-</ul>
-</li>
-<li><h4 id="基于定时器的动画"><a href="#基于定时器的动画" class="headerlink" title="基于定时器的动画"></a>基于定时器的动画</h4><ul>
-<li><h5 id="定时帧"><a href="#定时帧" class="headerlink" title="定时帧"></a>定时帧</h5><p>iOS按照每秒60次刷新屏幕，然后CAAnimation需要每次都计算新的帧并计算差值与缓存。需要一个定时器，以便按照屏幕刷新次数计算需要绘制需要绘制的值。当选取定时器时CADisplayLink比NSTime更为合适，有点如下：</p>
+<li><h4 id="基于定时器的动画"><a href="#基于定时器的动画" class="headerlink" title="基于定时器的动画"></a>基于定时器的动画</h4><h5 id="定时帧"><a href="#定时帧" class="headerlink" title="定时帧"></a>定时帧</h5><p>iOS按照每秒60次刷新屏幕，然后CAAnimation需要每次都计算新的帧并计算差值与缓存。需要一个定时器，以便按照屏幕刷新次数计算需要绘制需要绘制的值。当选取定时器时CADisplayLink比NSTime更为合适，有点如下：</p>
 <blockquote>
 <ul>
 <li>在有延迟时，默认忽略延迟帧。</li>
@@ -904,14 +851,10 @@
 </ul>
 </blockquote>
 </li>
-</ul>
-</li>
-<li><h4 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h4><ul>
-<li><h5 id="CPU-VS-GPU"><a href="#CPU-VS-GPU" class="headerlink" title="CPU VS GPU"></a>CPU VS GPU</h5><p>绘图和动画有2中处理方式：通过CPU或GPU。CPU所有的工作都在软件层面上，而GPU在硬件层面上。</p>
+<li><h4 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h4><h5 id="CPU-VS-GPU"><a href="#CPU-VS-GPU" class="headerlink" title="CPU VS GPU"></a>CPU VS GPU</h5><p>绘图和动画有2中处理方式：通过CPU或GPU。CPU所有的工作都在软件层面上，而GPU在硬件层面上。</p>
 <p>通常CPU可以处理所有事情，但是对于图像处理使用硬件的话会更快，因为GPU绘制图像时对高度浮点运算进行了优化。但是因为GPU没有无限制处理性能，当资源消耗加剧后，性能就会开始下降。</p>
 <p>要处理好动画性能优化，应先了解Core Animation 如何在2个处理器间工作。</p>
-</li>
-<li><h5 id="动画的舞台"><a href="#动画的舞台" class="headerlink" title="动画的舞台"></a>动画的舞台</h5><p>Core Animation 在iOS中是核心库之一，应用内和应用间多会用到。一个单独的动画可能会涉及多个APP的内容，如程序切换，分屏显示等(iOS 中不能实现，因为APP都有独立的沙盒)。</p>
+<h5 id="动画的舞台"><a href="#动画的舞台" class="headerlink" title="动画的舞台"></a>动画的舞台</h5><p>Core Animation 在iOS中是核心库之一，应用内和应用间多会用到。一个单独的动画可能会涉及多个APP的内容，如程序切换，分屏显示等(iOS 中不能实现，因为APP都有独立的沙盒)。</p>
 <p>动画和屏幕组合的图层，被一个单独的进程控制而非当前的APP，这就是渲染服务。iOS5之前是SpringBoard，iOS6之后是BackBoard。</p>
 <p>当运行一个动画时，该动画会被分离成独立的四部分。</p>
 <blockquote>
@@ -930,8 +873,7 @@
 </ul>
 </blockquote>
 <p>最后2个阶段在动画过程中不断重复，前5个阶段CPU处理，最后GPU执行。开发者能控制的只有前2个阶段：布局和显示。CoreAnimation在内部处理其他事物，无法控制。在布局和显示阶段，可以决定哪些由操作由哪个U处理。</p>
-</li>
-<li><h5 id="GPU相关操作"><a href="#GPU相关操作" class="headerlink" title="GPU相关操作"></a>GPU相关操作</h5><p>GPU进行的优化：通过采集图片和形状，运行变化，应用纹理和混合把他们输送到屏幕上。除非自己实现OpenGL着色器，从根本上解决硬件加速问题，但其他处理还是需要CPU进行。</p>
+<h5 id="GPU相关操作"><a href="#GPU相关操作" class="headerlink" title="GPU相关操作"></a>GPU相关操作</h5><p>GPU进行的优化：通过采集图片和形状，运行变化，应用纹理和混合把他们输送到屏幕上。除非自己实现OpenGL着色器，从根本上解决硬件加速问题，但其他处理还是需要CPU进行。</p>
 <p>宽泛地说，大多数的CALayer都是由GPU绘制的。如绘制边框和底色或是设置contents属性切割图片等。</p>
 <p>但是太多的事情会降低（基于GPU）图层绘制：</p>
 <blockquote>
@@ -950,8 +892,7 @@
 </li>
 </ul>
 </blockquote>
-</li>
-<li><h5 id="CPU相关操作"><a href="#CPU相关操作" class="headerlink" title="CPU相关操作"></a>CPU相关操作</h5><p>于CoreAnimation相关的大部分CPU操作都发生在动画之前，这意味着很少会因为CPU操作印象动画帧频，但是肯能造成动画延迟提交，导致显示有迟钝感。</p>
+<h5 id="CPU相关操作"><a href="#CPU相关操作" class="headerlink" title="CPU相关操作"></a>CPU相关操作</h5><p>于CoreAnimation相关的大部分CPU操作都发生在动画之前，这意味着很少会因为CPU操作印象动画帧频，但是肯能造成动画延迟提交，导致显示有迟钝感。</p>
 <p>造成CPU延迟动画操作：</p>
 <blockquote>
 <ul>
@@ -971,21 +912,16 @@
 </blockquote>
 <p>当图层被成功打包发送到渲染服务后，CPU仍要进行如下操作：</p>
 <p>为了显示屏幕上的图层，CoreAnimation必须渲染树中每个可见图层通过OpenGL循环转化为纹理三角板。由于GPU不知道渲染树层级关系，因此是由CPU处理转换操作。CPU转换工作和处理的图层数量程正比，如果图层关系过于复杂 ，会导致CPU渲染每一帧。</p>
-</li>
-<li><h5 id="IO操作"><a href="#IO操作" class="headerlink" title="IO操作"></a>IO操作</h5><p>还有一项涉及到的就是IO相关操作，上下文中的IO指的是内存或网络接口的硬件访问。2个控制器间的过度可能需要从nib文件中懒加载，或是旋转一个占用内存过大的图片，需要动态的滚动加载。</p>
+<h5 id="IO操作"><a href="#IO操作" class="headerlink" title="IO操作"></a>IO操作</h5><p>还有一项涉及到的就是IO相关操作，上下文中的IO指的是内存或网络接口的硬件访问。2个控制器间的过度可能需要从nib文件中懒加载，或是旋转一个占用内存过大的图片，需要动态的滚动加载。</p>
 <p>IO加载相对内存操作更慢，如果涉及动画就会是个很大的问题，之后了解到多线程、缓存和投机加载等解决方案。</p>
 </li>
-</ul>
-</li>
-<li><h4 id="高效绘图"><a href="#高效绘图" class="headerlink" title="高效绘图"></a>高效绘图</h4><ul>
-<li><h5 id="软件绘制"><a href="#软件绘制" class="headerlink" title="软件绘制"></a>软件绘制</h5><p>通常在Core Animation中使用绘图代替软件绘图（不通过GPU协作的绘图）。iOS中绘图通常由Core Graphics 框架来完成。在特定的场景下相比CoreAnimation和OpenGL，Core Graphics运行速度会慢一下。</p>
+<li><h4 id="高效绘图"><a href="#高效绘图" class="headerlink" title="高效绘图"></a>高效绘图</h4><h5 id="软件绘制"><a href="#软件绘制" class="headerlink" title="软件绘制"></a>软件绘制</h5><p>通常在Core Animation中使用绘图代替软件绘图（不通过GPU协作的绘图）。iOS中绘图通常由Core Graphics 框架来完成。在特定的场景下相比CoreAnimation和OpenGL，Core Graphics运行速度会慢一下。</p>
 <p>Core Graphics 不仅效率低下，还会消耗可观的内存。已全屏绘制为例，屏幕像素乘以放大倍数就是绘制的图片大小。每次绘制都要擦除内存，然后重新分配。</p>
 <p>软件绘制代价高昂，除非必要。尽量避免重绘视图。提高性能的秘诀</p>
 <blockquote>
 <p>尽量避免去绘制</p>
 </blockquote>
-</li>
-<li><h5 id="矢量图形"><a href="#矢量图形" class="headerlink" title="矢量图形"></a>矢量图形</h5><p>在使用Core Graphics进行绘制时，不能单纯的时候图片或图层绘制完成的</p>
+<h5 id="矢量图形"><a href="#矢量图形" class="headerlink" title="矢量图形"></a>矢量图形</h5><p>在使用Core Graphics进行绘制时，不能单纯的时候图片或图层绘制完成的</p>
 <p>如下：</p>
 <blockquote>
 <ul>
@@ -996,33 +932,24 @@
 </ul>
 </blockquote>
 <p>当实现简单绘制入画板工作时，可使用特殊的layer层，代替Core Graphics达到节省内存提高绘制效率</p>
-</li>
-<li><h5 id="脏矩形"><a href="#脏矩形" class="headerlink" title="脏矩形"></a>脏矩形</h5><p>为了减少不必要的绘制，Mac OS和iOS设备会把屏幕分成需要重绘和不需要重绘的区域。需要重绘的区域称为<a href="">脏区域</a> 。在实际应用中，鉴于区分非矩形区域边界的剪裁和混合复杂性，通常会区分出包含指定视图的矩形位置，这个位置就是<a href="">脏矩形</a> 。</p>
+<h5 id="脏矩形"><a href="#脏矩形" class="headerlink" title="脏矩形"></a>脏矩形</h5><p>为了减少不必要的绘制，Mac OS和iOS设备会把屏幕分成需要重绘和不需要重绘的区域。需要重绘的区域称为<a href="">脏区域</a> 。在实际应用中，鉴于区分非矩形区域边界的剪裁和混合复杂性，通常会区分出包含指定视图的矩形位置，这个位置就是<a href="">脏矩形</a> 。</p>
 <p>因此可以通过脏矩形减少图形重绘的区域，已缓解内存和CPU的压力。</p>
 <p>调用setNeedDispayInRect:传入需要重绘的区域，在drawRect:或drawLayer:InContext:方法中对该区域进行绘制，CPU会忽略超出部分。可以通过CGContextGetClipBoundingBox()函数从上下文中获取到具体的绘制区域的大小。</p>
 <p>相对于CoreGraphics的重绘，裁剪出来的区域可避免不必要的操作。但是如果重绘机制过于复杂，还是应该借助CoreGraphics进行绘制。为了避免在重绘区域内重绘已存在的绘制，避免重复，可以通过CGRectIntersectsRect()确定是否包含在进行绘制</p>
 </li>
-</ul>
-</li>
 <li><h4 id="异步绘制"><a href="#异步绘制" class="headerlink" title="异步绘制"></a>异步绘制</h4><p>UIKit单线程的本质，要求绘制一定在主线程，因此绘制可能会影响到用户交互。UIKit提供了2种方式绘制：CATiledLayer和drawsAsynchronously。</p>
-<ul>
-<li><h5 id="CATiledLayer"><a href="#CATiledLayer" class="headerlink" title="CATiledLayer"></a>CATiledLayer</h5><p>每个CATiledLayer的区块，都支持同时调用drawLayer:InContext:方法，避免了绘制影响用户交互，是很优秀的异步绘制方案。</p>
-</li>
-<li><h5 id="drawsAsychronously"><a href="#drawsAsychronously" class="headerlink" title="drawsAsychronously"></a>drawsAsychronously</h5><p>drawsAsychronously不同于异步绘制，只是延迟提交。绘制仍处于主线程，但是Context对象不会立刻绘制，而是通过队列逐步绘制。也可以避免绘制影响用户交互操作。</p>
-</li>
-</ul>
+<h5 id="CATiledLayer"><a href="#CATiledLayer" class="headerlink" title="CATiledLayer"></a>CATiledLayer</h5><p>每个CATiledLayer的区块，都支持同时调用drawLayer:InContext:方法，避免了绘制影响用户交互，是很优秀的异步绘制方案。</p>
+<h5 id="drawsAsychronously"><a href="#drawsAsychronously" class="headerlink" title="drawsAsychronously"></a>drawsAsychronously</h5><p>drawsAsychronously不同于异步绘制，只是延迟提交。绘制仍处于主线程，但是Context对象不会立刻绘制，而是通过队列逐步绘制。也可以避免绘制影响用户交互操作。</p>
 </li>
 <li><h4 id="IO操作-1"><a href="#IO操作-1" class="headerlink" title="IO操作"></a>IO操作</h4><p>关于图片操作中最消耗CPU时间的就是解压，一般其他方式达到延迟解压已环节CPU压力</p>
-<ul>
-<li><h5 id="延迟解压"><a href="#延迟解压" class="headerlink" title="延迟解压"></a>延迟解压</h5><p>一般使用三种方式延迟解压</p>
+<h5 id="延迟解压"><a href="#延迟解压" class="headerlink" title="延迟解压"></a>延迟解压</h5><p>一般使用三种方式延迟解压</p>
 <blockquote>
 <ul>
 <li>调用imageWithName:方法，和imageWithContentsOfFile:不同。会在加载图片之后立即进行解压。(但只对存在在应用资源束内的对象管用)</li>
 <li>把图片设置为图层内容，类似于UIimageView的image。但是采用主线程，几乎没有提升。 </li>
 </ul>
 </blockquote>
-</li>
-<li><h5 id="提前解压"><a href="#提前解压" class="headerlink" title="提前解压"></a>提前解压</h5><p>使用UIKit加载图，并立刻在CGContext绘制。图片需要在绘制前解压完成，因此强调了解压的及时性和有效性。绘制图片可以在后台绘制，不必要阻塞线程。</p>
+<h5 id="提前解压"><a href="#提前解压" class="headerlink" title="提前解压"></a>提前解压</h5><p>使用UIKit加载图，并立刻在CGContext绘制。图片需要在绘制前解压完成，因此强调了解压的及时性和有效性。绘制图片可以在后台绘制，不必要阻塞线程。</p>
 <p>一把使用如下两种方式</p>
 <blockquote>
 <ul>
@@ -1030,8 +957,7 @@
 <li>通过CoreGraphics绘制整张图片，用以保存和替代原有图片。可以对绘制进行优化。但是需要持有图片，而不是单纯依靠系统内存管理。</li>
 </ul>
 </blockquote>
-</li>
-<li><h5 id="CATiledLayer-1"><a href="#CATiledLayer-1" class="headerlink" title="CATiledLayer"></a>CATiledLayer</h5><p>利用CACATiledLayer异步绘制，避免阻塞线程。但是缺点也很明显</p>
+<h5 id="CATiledLayer-1"><a href="#CATiledLayer-1" class="headerlink" title="CATiledLayer"></a>CATiledLayer</h5><p>利用CACATiledLayer异步绘制，避免阻塞线程。但是缺点也很明显</p>
 <blockquote>
 <ul>
 <li>缓存算法和异步绘制机制不可控制，没有预留接口</li>
@@ -1045,10 +971,8 @@
 <li>由于是相同的代理方法，因此需要在drawLayer:inContext:中进行区分</li>
 </ul>
 </blockquote>
-</li>
-<li><h5 id="分辨率交换"><a href="#分辨率交换" class="headerlink" title="分辨率交换"></a>分辨率交换</h5><p>高分辨屏幕能展示更好的效果，但是对于动图区别不大，因此可以在滚动视图的代理中用低分辨率的图片代替高分辨率的图片已达到优化效果。</p>
-</li>
-<li><h5 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h5><p>缓存的实质：就是存储昂贵的计算结果在内存中，以便访问，因为读取内存很快。问题的本质就是权衡性能和有限的内存。</p>
+<h5 id="分辨率交换"><a href="#分辨率交换" class="headerlink" title="分辨率交换"></a>分辨率交换</h5><p>高分辨屏幕能展示更好的效果，但是对于动图区别不大，因此可以在滚动视图的代理中用低分辨率的图片代替高分辨率的图片已达到优化效果。</p>
+<h5 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h5><p>缓存的实质：就是存储昂贵的计算结果在内存中，以便访问，因为读取内存很快。问题的本质就是权衡性能和有限的内存。</p>
 <p>+imageNamed:方法</p>
 <p>优点很明显，会立刻进行解压，并在内存中保存缓存。</p>
 <blockquote>
@@ -1058,8 +982,7 @@
 <li>缓存机制不可控</li>
 </ul>
 </blockquote>
-</li>
-<li><h5 id="自定缓存"><a href="#自定缓存" class="headerlink" title="自定缓存"></a>自定缓存</h5><p>构建一个缓存机制很困难，缓存和命名是最难的</p>
+<h5 id="自定缓存"><a href="#自定缓存" class="headerlink" title="自定缓存"></a>自定缓存</h5><p>构建一个缓存机制很困难，缓存和命名是最难的</p>
 <p>自定义缓存应注意的点</p>
 <blockquote>
 <ul>
@@ -1069,14 +992,10 @@
 <li>内存回收机制</li>
 </ul>
 </blockquote>
-</li>
-<li><h5 id="NSCache"><a href="#NSCache" class="headerlink" title="NSCache"></a>NSCache</h5><p>UIKit提供的和NSDictionary相似的集合类，可设置最大缓存，在内存吃紧时会自动丢弃对象等优点。</p>
+<h5 id="NSCache"><a href="#NSCache" class="headerlink" title="NSCache"></a>NSCache</h5><p>UIKit提供的和NSDictionary相似的集合类，可设置最大缓存，在内存吃紧时会自动丢弃对象等优点。</p>
 <p>所有使用NSDictionary的地方都是用NSCache。</p>
 </li>
-</ul>
-</li>
-<li><h4 id="图层性能"><a href="#图层性能" class="headerlink" title="图层性能"></a>图层性能</h4><ul>
-<li><h5 id="隐式绘制"><a href="#隐式绘制" class="headerlink" title="隐式绘制"></a>隐式绘制</h5><p>除了利用CoreGraphics直接在Context显示绘制寄宿图，还可以通过三种方式隐式绘制</p>
+<li><h4 id="图层性能"><a href="#图层性能" class="headerlink" title="图层性能"></a>图层性能</h4><h5 id="隐式绘制"><a href="#隐式绘制" class="headerlink" title="隐式绘制"></a>隐式绘制</h5><p>除了利用CoreGraphics直接在Context显示绘制寄宿图，还可以通过三种方式隐式绘制</p>
 <blockquote>
 <ul>
 <li>使用特定的图层属性</li>
@@ -1122,8 +1041,6 @@
 <h5 id="对象回收"><a href="#对象回收" class="headerlink" title="对象回收"></a>对象回收</h5><p>基于UITableView、UICollectionView和MKMapView都利用了对象池概念，即重复利用而不是创建加回收机制，可以有效的避免重复创建节约计算时间。</p>
 <h5 id="CoreGraphics"><a href="#CoreGraphics" class="headerlink" title="CoreGraphics"></a>CoreGraphics</h5><p>虽然绘制现对于GPU图层数来说更为耗时，但是如果图层数量过度，通过绘制较少图层数量，也可以减少子图层的关系。</p>
 <h5 id="renerInContext方法"><a href="#renerInContext方法" class="headerlink" title="-renerInContext方法"></a>-renerInContext方法</h5><p>通过CALayer的renerInContext方法，可以获取对应图层的静态图片，可以将它赋值layer的contents完全遮蔽后面的图层既可以，相对于CoreAnimation维护的复杂图层树，这样子客观节约了性能。</p>
-</li>
-</ul>
 </li>
 </ul>
 
@@ -1305,7 +1222,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#图层树"><span class="nav-number">1.</span> <span class="nav-text">图层树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#寄宿图"><span class="nav-number">2.</span> <span class="nav-text">寄宿图</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#contents属性"><span class="nav-number">2.0.1.</span> <span class="nav-text">contents属性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#contentGravity"><span class="nav-number">2.0.2.</span> <span class="nav-text">contentGravity</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#contentScale"><span class="nav-number">2.0.3.</span> <span class="nav-text">contentScale</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#maskToBounds"><span class="nav-number">2.0.4.</span> <span class="nav-text">maskToBounds</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#contentsReck"><span class="nav-number">2.0.5.</span> <span class="nav-text">contentsReck</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#contentsCenter"><span class="nav-number">2.0.6.</span> <span class="nav-text">contentsCenter</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Custom-Drawing"><span class="nav-number">2.0.7.</span> <span class="nav-text">Custom Drawing</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图层几何学"><span class="nav-number">3.</span> <span class="nav-text">图层几何学</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#布局"><span class="nav-number">3.1.</span> <span class="nav-text">布局</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#锚点"><span class="nav-number">3.2.</span> <span class="nav-text">锚点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#坐标系"><span class="nav-number">3.3.</span> <span class="nav-text">坐标系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#翻转的几何结构"><span class="nav-number">3.4.</span> <span class="nav-text">翻转的几何结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Z坐标轴"><span class="nav-number">3.5.</span> <span class="nav-text">Z坐标轴</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hit-Testing"><span class="nav-number">3.6.</span> <span class="nav-text">Hit Testing</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自动布局"><span class="nav-number">3.7.</span> <span class="nav-text">自动布局</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#视觉效果"><span class="nav-number">4.</span> <span class="nav-text">视觉效果</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#圆角"><span class="nav-number">4.0.1.</span> <span class="nav-text">圆角</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#图层边框"><span class="nav-number">4.0.2.</span> <span class="nav-text">图层边框</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#阴影"><span class="nav-number">4.0.3.</span> <span class="nav-text">阴影</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#图层蒙板"><span class="nav-number">4.0.4.</span> <span class="nav-text">图层蒙板</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#拉伸和过滤"><span class="nav-number">4.0.5.</span> <span class="nav-text">拉伸和过滤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#组透明"><span class="nav-number">4.0.6.</span> <span class="nav-text">组透明</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变换"><span class="nav-number">4.1.</span> <span class="nav-text">变换</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#反射变换"><span class="nav-number">4.1.1.</span> <span class="nav-text">反射变换</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#变换的顺序影响变换结果"><span class="nav-number">4.1.2.</span> <span class="nav-text">变换的顺序影响变换结果</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3D变换"><span class="nav-number">4.1.3.</span> <span class="nav-text">3D变换</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#透视投影"><span class="nav-number">4.1.4.</span> <span class="nav-text">透视投影</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#灭点"><span class="nav-number">4.1.5.</span> <span class="nav-text">灭点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#sublayerTransform属性"><span class="nav-number">4.1.6.</span> <span class="nav-text">sublayerTransform属性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#背面"><span class="nav-number">4.1.7.</span> <span class="nav-text">背面</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#专用图层"><span class="nav-number">4.2.</span> <span class="nav-text">专用图层</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#CAShapeLayer"><span class="nav-number">4.2.1.</span> <span class="nav-text">CAShapeLayer</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CATextLayer"><span class="nav-number">4.2.2.</span> <span class="nav-text">CATextLayer</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CATransformLayer"><span class="nav-number">4.2.3.</span> <span class="nav-text">CATransformLayer</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CAGradientLayer"><span class="nav-number">4.2.4.</span> <span class="nav-text">CAGradientLayer</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CAReplicatorLayer"><span class="nav-number">4.2.5.</span> <span class="nav-text">CAReplicatorLayer</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动画"><span class="nav-number">4.3.</span> <span class="nav-text">动画</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#隐式动画"><span class="nav-number">4.3.1.</span> <span class="nav-text">隐式动画</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#呈现与模型"><span class="nav-number">4.3.2.</span> <span class="nav-text">呈现与模型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#显示动画"><span class="nav-number">4.3.3.</span> <span class="nav-text">显示动画</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#取消动画"><span class="nav-number">4.3.4.</span> <span class="nav-text">取消动画</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#图层时间"><span class="nav-number">4.4.</span> <span class="nav-text">图层时间</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#持续和重复"><span class="nav-number">4.4.1.</span> <span class="nav-text">持续和重复</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#相对时间"><span class="nav-number">4.4.2.</span> <span class="nav-text">相对时间</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#fillMode"><span class="nav-number">4.4.3.</span> <span class="nav-text">fillMode</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#手动动画"><span class="nav-number">4.4.4.</span> <span class="nav-text">手动动画</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缓冲"><span class="nav-number">4.5.</span> <span class="nav-text">缓冲</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#动画速度"><span class="nav-number">4.5.1.</span> <span class="nav-text">动画速度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#UIView的动画缓冲"><span class="nav-number">4.5.2.</span> <span class="nav-text">UIView的动画缓冲</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缓冲和关键帧动画"><span class="nav-number">4.5.3.</span> <span class="nav-text">缓冲和关键帧动画</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#自定义缓冲函数"><span class="nav-number">4.5.4.</span> <span class="nav-text">自定义缓冲函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#更为复杂的缓冲动画"><span class="nav-number">4.5.5.</span> <span class="nav-text">更为复杂的缓冲动画</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#自动化流程"><span class="nav-number">4.5.6.</span> <span class="nav-text">自动化流程</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于定时器的动画"><span class="nav-number">4.6.</span> <span class="nav-text">基于定时器的动画</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#定时帧"><span class="nav-number">4.6.1.</span> <span class="nav-text">定时帧</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#性能优化"><span class="nav-number">4.7.</span> <span class="nav-text">性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#CPU-VS-GPU"><span class="nav-number">4.7.1.</span> <span class="nav-text">CPU VS GPU</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#动画的舞台"><span class="nav-number">4.7.2.</span> <span class="nav-text">动画的舞台</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#GPU相关操作"><span class="nav-number">4.7.3.</span> <span class="nav-text">GPU相关操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CPU相关操作"><span class="nav-number">4.7.4.</span> <span class="nav-text">CPU相关操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IO操作"><span class="nav-number">4.7.5.</span> <span class="nav-text">IO操作</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#高效绘图"><span class="nav-number">4.8.</span> <span class="nav-text">高效绘图</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#软件绘制"><span class="nav-number">4.8.1.</span> <span class="nav-text">软件绘制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#矢量图形"><span class="nav-number">4.8.2.</span> <span class="nav-text">矢量图形</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#脏矩形"><span class="nav-number">4.8.3.</span> <span class="nav-text">脏矩形</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#异步绘制"><span class="nav-number">4.9.</span> <span class="nav-text">异步绘制</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#CATiledLayer"><span class="nav-number">4.9.1.</span> <span class="nav-text">CATiledLayer</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#drawsAsychronously"><span class="nav-number">4.9.2.</span> <span class="nav-text">drawsAsychronously</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IO操作-1"><span class="nav-number">4.10.</span> <span class="nav-text">IO操作</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#延迟解压"><span class="nav-number">4.10.1.</span> <span class="nav-text">延迟解压</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#提前解压"><span class="nav-number">4.10.2.</span> <span class="nav-text">提前解压</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CATiledLayer-1"><span class="nav-number">4.10.3.</span> <span class="nav-text">CATiledLayer</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#分辨率交换"><span class="nav-number">4.10.4.</span> <span class="nav-text">分辨率交换</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缓存"><span class="nav-number">4.10.5.</span> <span class="nav-text">缓存</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#自定缓存"><span class="nav-number">4.10.6.</span> <span class="nav-text">自定缓存</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#NSCache"><span class="nav-number">4.10.7.</span> <span class="nav-text">NSCache</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#图层性能"><span class="nav-number">4.11.</span> <span class="nav-text">图层性能</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#隐式绘制"><span class="nav-number">4.11.1.</span> <span class="nav-text">隐式绘制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#文本"><span class="nav-number">4.11.2.</span> <span class="nav-text">文本</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#光栅化"><span class="nav-number">4.11.3.</span> <span class="nav-text">光栅化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#离屏渲染"><span class="nav-number">4.11.4.</span> <span class="nav-text">离屏渲染</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CAShapeLayer-1"><span class="nav-number">4.11.5.</span> <span class="nav-text">CAShapeLayer</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#可伸缩的图片"><span class="nav-number">4.11.6.</span> <span class="nav-text">可伸缩的图片</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#shadowPath"><span class="nav-number">4.11.7.</span> <span class="nav-text">shadowPath</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#混合和过度绘制"><span class="nav-number">4.11.8.</span> <span class="nav-text">混合和过度绘制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#减少图层数量"><span class="nav-number">4.11.9.</span> <span class="nav-text">减少图层数量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#裁剪"><span class="nav-number">4.11.10.</span> <span class="nav-text">裁剪</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#对象回收"><span class="nav-number">4.11.11.</span> <span class="nav-text">对象回收</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CoreGraphics"><span class="nav-number">4.11.12.</span> <span class="nav-text">CoreGraphics</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#renerInContext方法"><span class="nav-number">4.11.13.</span> <span class="nav-text">-renerInContext方法</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#图层树"><span class="nav-number">1.</span> <span class="nav-text">图层树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#寄宿图"><span class="nav-number">2.</span> <span class="nav-text">寄宿图</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#contents属性"><span class="nav-number">2.0.1.</span> <span class="nav-text">contents属性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#contentGravity"><span class="nav-number">2.0.2.</span> <span class="nav-text">contentGravity</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#contentScale"><span class="nav-number">2.0.3.</span> <span class="nav-text">contentScale</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#maskToBounds"><span class="nav-number">2.0.4.</span> <span class="nav-text">maskToBounds</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#contentsReck"><span class="nav-number">2.0.5.</span> <span class="nav-text">contentsReck</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#contentsCenter"><span class="nav-number">2.0.6.</span> <span class="nav-text">contentsCenter</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Custom-Drawing"><span class="nav-number">2.0.7.</span> <span class="nav-text">Custom Drawing</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图层几何学"><span class="nav-number">3.</span> <span class="nav-text">图层几何学</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#布局"><span class="nav-number">3.0.1.</span> <span class="nav-text">布局</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#坐标系"><span class="nav-number">3.0.2.</span> <span class="nav-text">坐标系</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#翻转的几何结构"><span class="nav-number">3.0.3.</span> <span class="nav-text">翻转的几何结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Z坐标轴"><span class="nav-number">3.0.4.</span> <span class="nav-text">Z坐标轴</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Hit-Testing"><span class="nav-number">3.0.5.</span> <span class="nav-text">Hit Testing</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#自动布局"><span class="nav-number">3.0.6.</span> <span class="nav-text">自动布局</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#视觉效果"><span class="nav-number">4.</span> <span class="nav-text">视觉效果</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#圆角"><span class="nav-number">4.0.1.</span> <span class="nav-text">圆角</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#图层边框"><span class="nav-number">4.0.2.</span> <span class="nav-text">图层边框</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#阴影"><span class="nav-number">4.0.3.</span> <span class="nav-text">阴影</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#图层蒙板"><span class="nav-number">4.0.4.</span> <span class="nav-text">图层蒙板</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#拉伸和过滤"><span class="nav-number">4.0.5.</span> <span class="nav-text">拉伸和过滤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#组透明"><span class="nav-number">4.0.6.</span> <span class="nav-text">组透明</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变换"><span class="nav-number">4.1.</span> <span class="nav-text">变换</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#反射变换"><span class="nav-number">4.1.1.</span> <span class="nav-text">反射变换</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#变换的顺序影响变换结果"><span class="nav-number">4.1.2.</span> <span class="nav-text">变换的顺序影响变换结果</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3D变换"><span class="nav-number">4.1.3.</span> <span class="nav-text">3D变换</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#透视投影"><span class="nav-number">4.1.4.</span> <span class="nav-text">透视投影</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#灭点"><span class="nav-number">4.1.5.</span> <span class="nav-text">灭点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#sublayerTransform属性"><span class="nav-number">4.1.6.</span> <span class="nav-text">sublayerTransform属性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#背面"><span class="nav-number">4.1.7.</span> <span class="nav-text">背面</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#专用图层"><span class="nav-number">4.2.</span> <span class="nav-text">专用图层</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#CAShapeLayer"><span class="nav-number">4.2.1.</span> <span class="nav-text">CAShapeLayer</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CATextLayer"><span class="nav-number">4.2.2.</span> <span class="nav-text">CATextLayer</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#替换UILabel的绘制方案"><span class="nav-number">4.2.3.</span> <span class="nav-text">替换UILabel的绘制方案</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CATransformLayer"><span class="nav-number">4.2.4.</span> <span class="nav-text">CATransformLayer</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CAGradientLayer"><span class="nav-number">4.2.5.</span> <span class="nav-text">CAGradientLayer</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CAReplicatorLayer"><span class="nav-number">4.2.6.</span> <span class="nav-text">CAReplicatorLayer</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CAEmitterLayer"><span class="nav-number">4.2.7.</span> <span class="nav-text">CAEmitterLayer</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CAEmitterCell"><span class="nav-number">4.2.8.</span> <span class="nav-text">CAEmitterCell</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动画"><span class="nav-number">4.3.</span> <span class="nav-text">动画</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#隐式动画"><span class="nav-number">4.3.1.</span> <span class="nav-text">隐式动画</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#呈现与模型"><span class="nav-number">4.3.2.</span> <span class="nav-text">呈现与模型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#取消动画"><span class="nav-number">4.3.3.</span> <span class="nav-text">取消动画</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#图层时间"><span class="nav-number">4.4.</span> <span class="nav-text">图层时间</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#持续和重复"><span class="nav-number">4.4.1.</span> <span class="nav-text">持续和重复</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#相对时间"><span class="nav-number">4.4.2.</span> <span class="nav-text">相对时间</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#fillMode"><span class="nav-number">4.4.3.</span> <span class="nav-text">fillMode</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#手动动画"><span class="nav-number">4.4.4.</span> <span class="nav-text">手动动画</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缓冲"><span class="nav-number">4.5.</span> <span class="nav-text">缓冲</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#动画速度"><span class="nav-number">4.5.1.</span> <span class="nav-text">动画速度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#UIView的动画缓冲"><span class="nav-number">4.5.2.</span> <span class="nav-text">UIView的动画缓冲</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缓冲和关键帧动画"><span class="nav-number">4.5.3.</span> <span class="nav-text">缓冲和关键帧动画</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#自定义缓冲函数"><span class="nav-number">4.5.4.</span> <span class="nav-text">自定义缓冲函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#更为复杂的缓冲动画"><span class="nav-number">4.5.5.</span> <span class="nav-text">更为复杂的缓冲动画</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#自动化流程"><span class="nav-number">4.5.5.1.</span> <span class="nav-text">自动化流程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于定时器的动画"><span class="nav-number">4.6.</span> <span class="nav-text">基于定时器的动画</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#定时帧"><span class="nav-number">4.6.1.</span> <span class="nav-text">定时帧</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#性能优化"><span class="nav-number">4.7.</span> <span class="nav-text">性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#CPU-VS-GPU"><span class="nav-number">4.7.1.</span> <span class="nav-text">CPU VS GPU</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#动画的舞台"><span class="nav-number">4.7.2.</span> <span class="nav-text">动画的舞台</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#GPU相关操作"><span class="nav-number">4.7.3.</span> <span class="nav-text">GPU相关操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CPU相关操作"><span class="nav-number">4.7.4.</span> <span class="nav-text">CPU相关操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IO操作"><span class="nav-number">4.7.5.</span> <span class="nav-text">IO操作</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#高效绘图"><span class="nav-number">4.8.</span> <span class="nav-text">高效绘图</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#软件绘制"><span class="nav-number">4.8.1.</span> <span class="nav-text">软件绘制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#矢量图形"><span class="nav-number">4.8.2.</span> <span class="nav-text">矢量图形</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#脏矩形"><span class="nav-number">4.8.3.</span> <span class="nav-text">脏矩形</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#异步绘制"><span class="nav-number">4.9.</span> <span class="nav-text">异步绘制</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#CATiledLayer"><span class="nav-number">4.9.1.</span> <span class="nav-text">CATiledLayer</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#drawsAsychronously"><span class="nav-number">4.9.2.</span> <span class="nav-text">drawsAsychronously</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IO操作-1"><span class="nav-number">4.10.</span> <span class="nav-text">IO操作</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#延迟解压"><span class="nav-number">4.10.1.</span> <span class="nav-text">延迟解压</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#提前解压"><span class="nav-number">4.10.2.</span> <span class="nav-text">提前解压</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CATiledLayer-1"><span class="nav-number">4.10.3.</span> <span class="nav-text">CATiledLayer</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#分辨率交换"><span class="nav-number">4.10.4.</span> <span class="nav-text">分辨率交换</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缓存"><span class="nav-number">4.10.5.</span> <span class="nav-text">缓存</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#自定缓存"><span class="nav-number">4.10.6.</span> <span class="nav-text">自定缓存</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#NSCache"><span class="nav-number">4.10.7.</span> <span class="nav-text">NSCache</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#图层性能"><span class="nav-number">4.11.</span> <span class="nav-text">图层性能</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#隐式绘制"><span class="nav-number">4.11.1.</span> <span class="nav-text">隐式绘制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#文本"><span class="nav-number">4.11.2.</span> <span class="nav-text">文本</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#光栅化"><span class="nav-number">4.11.3.</span> <span class="nav-text">光栅化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#离屏渲染"><span class="nav-number">4.11.4.</span> <span class="nav-text">离屏渲染</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CAShapeLayer-1"><span class="nav-number">4.11.5.</span> <span class="nav-text">CAShapeLayer</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#可伸缩的图片"><span class="nav-number">4.11.6.</span> <span class="nav-text">可伸缩的图片</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#shadowPath"><span class="nav-number">4.11.7.</span> <span class="nav-text">shadowPath</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#混合和过度绘制"><span class="nav-number">4.11.8.</span> <span class="nav-text">混合和过度绘制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#减少图层数量"><span class="nav-number">4.11.9.</span> <span class="nav-text">减少图层数量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#裁剪"><span class="nav-number">4.11.10.</span> <span class="nav-text">裁剪</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#对象回收"><span class="nav-number">4.11.11.</span> <span class="nav-text">对象回收</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CoreGraphics"><span class="nav-number">4.11.12.</span> <span class="nav-text">CoreGraphics</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#renerInContext方法"><span class="nav-number">4.11.13.</span> <span class="nav-text">-renerInContext方法</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
